@@ -10,6 +10,8 @@ set(NTSH_DEFINES "")
 add_subdirectory(external/Module)
 add_subdirectory(external/Common)
 
+list(APPEND NTSH_DEFINES NTSH_CURRENT_MODULE_AUDIO)
+
 set(MODULE_SOURCES
 	src/ntsh_audio_module.cpp)	
 set(MODULE_HEADERS
