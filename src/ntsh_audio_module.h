@@ -3,9 +3,9 @@
 
 class NutshellAudioModule : public NutshellAudioModuleInterface {
 public:
-    NutshellAudioModule() : NutshellAudioModuleInterface("Nutshell Audio Test Module") {}
+	NutshellAudioModule() : NutshellAudioModuleInterface("Nutshell Audio Test Module") {}
 
-    void init();
-    void update(double dt);
-    void destroy();
+	void init();
+	void update(double dt);
+	void destroy();
 };
