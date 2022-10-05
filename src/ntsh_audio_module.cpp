@@ -1,6 +1,7 @@
 #include "ntsh_audio_module.h"
 #include "../external/Module/ntsh_module_defines.h"
 #include "../external/Module/ntsh_dynamic_library.h"
+#include "../external/Common/ntsh_engine_defines.h"
 #include "../external/Common/ntsh_engine_enums.h"
 
 void NutshellAudioModule::init() {
@@ -16,10 +17,10 @@ void NutshellAudioModule::destroy() {
 	NTSH_MODULE_WARNING("destroy() function not implemented.");
 }
 
-extern "C" NTSH_MODULE_API NutshellAudioModuleInterface * createModule() {
+extern "C" NTSH_MODULE_API NutshellAudioModuleInterface* createModule() {
 	return new NutshellAudioModule;
 }
 
-extern "C" NTSH_MODULE_API void destroyModule(NutshellAudioModuleInterface * m) {
+extern "C" NTSH_MODULE_API void destroyModule(NutshellAudioModuleInterface* m) {
 	delete m;
 }
