@@ -12,6 +12,8 @@ add_subdirectory(external/Common)
 
 list(APPEND NTSH_DEFINES NTSH_CURRENT_MODULE_AUDIO)
 
+add_subdirectory(external/openal-soft)
+
 set(MODULE_SOURCES
 	src/ntsh_audio_module.cpp)	
 set(MODULE_HEADERS
@@ -22,7 +24,7 @@ set(HEADERS ${MODULE_HEADERS})
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE NutshellEngine::Module NutshellEngine::Common)
+target_link_libraries(${PROJECT_NAME} PRIVATE NutshellEngine::Module NutshellEngine::Common OpenAL)
 
 target_compile_options(${PROJECT_NAME} PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
@@ -37,5 +39,9 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 	$<$<CONFIG:RelWithDebInfo>:NTSH_DEBUG>)
 
 set_target_properties(${PROJECT_NAME}
-    PROPERTIES
-    DEFINE_SYMBOL "NutshellModule_EXPORTS")
+	PROPERTIES
+	DEFINE_SYMBOL "NutshellModule_EXPORTS")
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:OpenAL> ${PROJECT_BINARY_DIR}
+	COMMENT "Copy OpenAL32 to project build folder.")
