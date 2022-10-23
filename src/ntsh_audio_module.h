@@ -1,10 +1,11 @@
 #pragma once
 #include "../external/Common/module_interfaces/ntsh_audio_module_interface.h"
-#include "../external/Module/ntsh_module_defines.h"
+#include "../external/Module/utils/ntsh_module_defines.h"
 #include "../external/openal-soft/include/AL/al.h"
 #include "../external/openal-soft/include/AL/alc.h"
+#include <unordered_map>
 
-#define alCall(function, ...) alCallImp(__FILE__, __LINE__, function, __VA_ARGS__)
+#define alCall(function, ...) alCallImpl(__FILE__, __LINE__, function, __VA_ARGS__)
 
 inline bool alCheckErrors(const std::string& filename, const uint32_t line) {
 	ALenum error = alGetError();
@@ -45,7 +46,7 @@ auto alCallImpl(const char* filename, const uint32_t line, alFunction function, 
 
 template <typename alFunction, typename... Params>
 auto alCallImpl(const char* filename, const uint32_t line, alFunction function, Params... params)
-->typename std::enable_if_t<!std::is_same_v<void, decltype(function(params...))>, bool> {
+->typename std::enable_if_t<std::is_same_v<void, decltype(function(params...))>, bool> {
 	function(std::forward<Params>(params)...);
 
 	return alCheckErrors(filename, line);
@@ -97,6 +98,14 @@ auto alcCallImpl(const char* filename, const uint32_t line, alcFunction function
 	return alcCheckErrors(filename, line, device);
 }
 
+struct OpenALSound {
+	ALuint buffer;
+	ALuint source;
+	ALint state;
+	float gain = 1.0f;
+	float pitch = 1.0f;
+};
+
 class NutshellAudioModule : public NutshellAudioModuleInterface {
 public:
 	NutshellAudioModule() : NutshellAudioModuleInterface("Nutshell Audio OpenAL Soft Module") {}
@@ -105,8 +114,11 @@ public:
 	void update(double dt);
 	void destroy();
 
-	// Plays an audio and returns an identifier
-	NtshAudioId play(const NtshAudio& audio);
+	// Loads the sound described in the audio parameter in the internal format and returns a unique identifier
+	NtshAudioId load(const NtshAudio audio);
+
+	// Plays the audio with identifier audioId
+	void play(NtshAudioId audioId);
 	// Pauses the audio with identifier audioId
 	void pause(NtshAudioId audioId);
 	// Stops the audio with identifier audioId
@@ -126,6 +138,10 @@ public:
 	float getPitch(NtshAudioId audioId);
 
 private:
-	ALCdevice* m_device;
-	ALCcontext* m_context;
+	ALCdevice* m_device = nullptr;
+	ALCcontext* m_context = nullptr;
+
+	std::unordered_map<NtshAudioId, OpenALSound> m_idToSound;
+
+	NtshAudioId m_id = 0;
 };
