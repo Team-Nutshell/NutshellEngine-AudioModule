@@ -17,10 +17,15 @@ void NutshellAudioModule::destroy() {
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-NtshAudioId NutshellAudioModule::play(const NtshAudio& audio) {
+NtshAudioId NutshellAudioModule::load(const NtshAudio audio) {
 	NTSH_UNUSED(audio);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 	return 0;
+}
+
+void NutshellAudioModule::play(NtshAudioId audioId) {
+	NTSH_UNUSED(audioId);
+	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
 void NutshellAudioModule::pause(NtshAudioId audioId) {

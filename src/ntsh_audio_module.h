@@ -9,8 +9,11 @@ public:
 	void update(double dt);
 	void destroy();
 
-	// Plays an audio and returns an identifier
-	NtshAudioId play(const NtshAudio& audio);
+	// Loads the sound described in the audio parameter in the internal format and returns a unique identifier
+	NtshAudioId load(const NtshAudio audio);
+
+	// Plays the audio with identifier audioId
+	void play(NtshAudioId audioId);
 	// Pauses the audio with identifier audioId
 	void pause(NtshAudioId audioId);
 	// Stops the audio with identifier audioId
