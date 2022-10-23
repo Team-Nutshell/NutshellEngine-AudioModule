@@ -1,2 +1,2 @@
-# NutshellEngine-AudioModule
-NutshellEngine's Audio Module resources.
+# NutshellEngine-AudioModule - OpenAL-Soft
+NutshellEngine Audio Module using OpenAL-Soft.
