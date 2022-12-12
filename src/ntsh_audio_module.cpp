@@ -7,13 +7,13 @@ void NutshellAudioModule::init() {
 	// Open audio device
 	m_device = alcOpenDevice(nullptr);
 	if (!m_device) {
-		NTSH_MODULE_ERROR("Unable to open audio device.", NTSH_RESULT_MODULE_ERROR);
+		NTSH_MODULE_ERROR("Unable to open audio device.", NtshResult::ModuleError);
 	}
 
 	// Open context
 	if (alcCall(alcCreateContext, m_context, m_device, m_device, nullptr)) {
 		if (!m_context) {
-			NTSH_MODULE_ERROR("Unable to create audio context.", NTSH_RESULT_MODULE_ERROR);
+			NTSH_MODULE_ERROR("Unable to create audio context.", NtshResult::ModuleError);
 		}
 	}
 
@@ -21,7 +21,7 @@ void NutshellAudioModule::init() {
 	ALCboolean makeContextCurrent = ALC_FALSE;
 	if (!alcCall(alcMakeContextCurrent, makeContextCurrent, m_device, m_context)) {
 		if (makeContextCurrent != ALC_TRUE) {
-			NTSH_MODULE_ERROR("Unable to make audio context current.", NTSH_RESULT_MODULE_ERROR);
+			NTSH_MODULE_ERROR("Unable to make audio context current.", NtshResult::ModuleError);
 		}
 	}
 }
@@ -75,7 +75,7 @@ NtshAudioId NutshellAudioModule::load(const NtshAudio audio) {
 	}
 
 	if (format == 0) {
-		NTSH_MODULE_ERROR("Error finding the right format.", NTSH_RESULT_MODULE_ERROR);
+		NTSH_MODULE_ERROR("Error finding the right format.", NtshResult::ModuleError);
 	}
 
 	alCall(alBufferData, newSound.buffer, format, audio.data.data(), static_cast<ALsizei>(audio.size), audio.sampleRate);
