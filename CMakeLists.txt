@@ -45,3 +45,19 @@ set_target_properties(${PROJECT_NAME}
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:OpenAL> ${PROJECT_BINARY_DIR}
 	COMMENT "Copy OpenAL32 to project build folder.")
+
+set(NTSH_ENGINE_MODULES_DIRECTORY "" CACHE PATH "Give the option to install the built module into NutshellEngine\'s modules directory.")
+if(EXISTS ${NTSH_ENGINE_MODULES_DIRECTORY})
+	message(STATUS "Found NutshellEngine\'s modules directory at ${NTSH_ENGINE_MODULES_DIRECTORY}.")
+	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+		install(TARGETS ${PROJECT_NAME}
+			RUNTIME
+			DESTINATION ${NTSH_ENGINE_MODULES_DIRECTORY})
+	else(CMAKE_SYSTEM_NAME)
+		install(TARGETS ${PROJECT_NAME}
+			LIBRARY
+			DESTINATION ${NTSH_ENGINE_MODULES_DIRECTORY})
+	endif()
+elseif(NOT NTSH_ENGINE_MODULES_DIRECTORY STREQUAL "")
+	message(WARNING "Could not find NutshellEngine\'s modules directory at ${NTSH_ENGINE_MODULES_DIRECTORY}.")
+endif()
