@@ -10,25 +10,25 @@ public:
 	void destroy();
 
 	// Loads the sound described in the audio parameter in the internal format and returns a unique identifier
-	NtshAudioId load(const NtshAudio audio);
+	Ntsh::SoundId load(const Ntsh::Sound audio);
 
-	// Plays the audio with identifier audioId
-	void play(NtshAudioId audioId);
-	// Pauses the audio with identifier audioId
-	void pause(NtshAudioId audioId);
-	// Stops the audio with identifier audioId
-	void stop(NtshAudioId audioId);
+	// Plays the sound with identifier soundId
+	void play(Ntsh::SoundId audioId);
+	// Pauses the sound with identifier soundId
+	void pause(Ntsh::SoundId audioId);
+	// Stops the sound with identifier soundId
+	void stop(Ntsh::SoundId audioId);
 
-	// Returns true if the audio with identifier audioId is currently playing, else, returns false
-	bool isPlaying(NtshAudioId audioId);
+	// Returns true if the sound with identifier soundId is currently playing, else, returns false
+	bool isPlaying(Ntsh::SoundId audioId);
 
-	// Sets the gain of the audio with identifier audioId
-	void setGain(NtshAudioId audioId, float newGain);
-	// Gets the gain of the audio with identifier audioId
-	float getGain(NtshAudioId audioId);
+	// Sets the gain of the sound with identifier soundId
+	void setGain(Ntsh::SoundId audioId, float newGain);
+	// Gets the gain of the sound with identifier soundId
+	float getGain(Ntsh::SoundId audioId);
 
-	// Sets the pitch of the audio with identifier audioId
-	void setPitch(NtshAudioId audioId, float newPitch);
-	// Gets the pitch of the audio with identifier audioId
-	float getPitch(NtshAudioId audioId);
+	// Sets the pitch of the sound with identifier soundId
+	void setPitch(Ntsh::SoundId audioId, float newPitch);
+	// Gets the pitch of the sound with identifier soundId
+	float getPitch(Ntsh::SoundId audioId);
 };

@@ -17,52 +17,52 @@ void NutshellAudioModule::destroy() {
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-NtshAudioId NutshellAudioModule::load(const NtshAudio audio) {
+Ntsh::SoundId NutshellAudioModule::load(const Ntsh::Sound audio) {
 	NTSH_UNUSED(audio);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 	return 0;
 }
 
-void NutshellAudioModule::play(NtshAudioId audioId) {
+void NutshellAudioModule::play(Ntsh::SoundId audioId) {
 	NTSH_UNUSED(audioId);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-void NutshellAudioModule::pause(NtshAudioId audioId) {
+void NutshellAudioModule::pause(Ntsh::SoundId audioId) {
 	NTSH_UNUSED(audioId);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-void NutshellAudioModule::stop(NtshAudioId audioId) {
+void NutshellAudioModule::stop(Ntsh::SoundId audioId) {
 	NTSH_UNUSED(audioId);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-bool NutshellAudioModule::isPlaying(NtshAudioId audioId) {
+bool NutshellAudioModule::isPlaying(Ntsh::SoundId audioId) {
 	NTSH_UNUSED(audioId);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 	return false;
 }
 
-void NutshellAudioModule::setGain(NtshAudioId audioId, float newGain) {
+void NutshellAudioModule::setGain(Ntsh::SoundId audioId, float newGain) {
 	NTSH_UNUSED(audioId);
 	NTSH_UNUSED(newGain);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-float NutshellAudioModule::getGain(NtshAudioId audioId) {
+float NutshellAudioModule::getGain(Ntsh::SoundId audioId) {
 	NTSH_UNUSED(audioId);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 	return 0.0f;
 }
 
-void NutshellAudioModule::setPitch(NtshAudioId audioId, float newPitch) {
+void NutshellAudioModule::setPitch(Ntsh::SoundId audioId, float newPitch) {
 	NTSH_UNUSED(audioId);
 	NTSH_UNUSED(newPitch);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-float NutshellAudioModule::getPitch(NtshAudioId audioId) {
+float NutshellAudioModule::getPitch(Ntsh::SoundId audioId) {
 	NTSH_UNUSED(audioId);
 	NTSH_MODULE_FUNCTION_NOT_IMPLEMENTED();
 	return 0.0f;
