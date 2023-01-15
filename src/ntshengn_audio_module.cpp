@@ -1,19 +1,19 @@
-#include "ntsh_audio_module.h"
-#include "../external/Module/utils/ntsh_dynamic_library.h"
-#include "../external/Common/utils/ntsh_engine_defines.h"
-#include "../external/Common/utils/ntsh_engine_enums.h"
+#include "ntshengn_audio_module.h"
+#include "../external/Module/utils/ntshengn_dynamic_library.h"
+#include "../external/Common/utils/ntshengn_defines.h"
+#include "../external/Common/utils/ntshengn_enums.h"
 
-void NutshellAudioModule::init() {
+void NtshEngn::AudioModule::init() {
 	// Open audio device
 	m_device = alcOpenDevice(nullptr);
 	if (!m_device) {
-		NTSH_MODULE_ERROR("Unable to open audio device.", Ntsh::Result::ModuleError);
+		NTSHENGN_MODULE_ERROR("Unable to open audio device.", NtshEngn::Result::ModuleError);
 	}
 
 	// Open context
 	if (alcCall(alcCreateContext, m_context, m_device, m_device, nullptr)) {
 		if (!m_context) {
-			NTSH_MODULE_ERROR("Unable to create audio context.", Ntsh::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("Unable to create audio context.", NtshEngn::Result::ModuleError);
 		}
 	}
 
@@ -21,23 +21,23 @@ void NutshellAudioModule::init() {
 	ALCboolean makeContextCurrent = ALC_FALSE;
 	if (!alcCall(alcMakeContextCurrent, makeContextCurrent, m_device, m_context)) {
 		if (makeContextCurrent != ALC_TRUE) {
-			NTSH_MODULE_ERROR("Unable to make audio context current.", Ntsh::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("Unable to make audio context current.", NtshEngn::Result::ModuleError);
 		}
 	}
 }
 
-void NutshellAudioModule::update(double dt) {
-	NTSH_UNUSED(dt);
+void NtshEngn::AudioModule::update(double dt) {
+	NTSHENGN_UNUSED(dt);
 
-	for (Ntsh::SoundId id = 0; id < m_id; id++) {
+	for (NtshEngn::SoundId id = 0; id < m_id; id++) {
 		if (isPlaying(id)) {
 			alCall(alGetSourcei, m_idToSound[id].source, AL_SOURCE_STATE, &m_idToSound[id].state);
 		}
 	}
 }
 
-void NutshellAudioModule::destroy() {
-	for (Ntsh::SoundId id = 0; id < m_id; id++) {
+void NtshEngn::AudioModule::destroy() {
+	for (NtshEngn::SoundId id = 0; id < m_id; id++) {
 		if (isPlaying(id)) {
 			stop(id);
 		}
@@ -49,7 +49,7 @@ void NutshellAudioModule::destroy() {
 	alcCloseDevice(m_device);
 }
 
-Ntsh::SoundId NutshellAudioModule::load(const Ntsh::Sound audio) {
+NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound audio) {
 	OpenALSound newSound;
 	
 	// Generate buffer
@@ -75,7 +75,7 @@ Ntsh::SoundId NutshellAudioModule::load(const Ntsh::Sound audio) {
 	}
 
 	if (format == 0) {
-		NTSH_MODULE_ERROR("Error finding the right format.", Ntsh::Result::ModuleError);
+		NTSHENGN_MODULE_ERROR("Error finding the right format.", NtshEngn::Result::ModuleError);
 	}
 
 	alCall(alBufferData, newSound.buffer, format, audio.data.data(), static_cast<ALsizei>(audio.size), audio.sampleRate);
@@ -92,47 +92,47 @@ Ntsh::SoundId NutshellAudioModule::load(const Ntsh::Sound audio) {
 	return m_id++;
 }
 
-void NutshellAudioModule::play(Ntsh::SoundId audioId) {
+void NtshEngn::AudioModule::play(NtshEngn::SoundId audioId) {
 	alCall(alSourcePlay, m_idToSound[audioId].source);
 	m_idToSound[audioId].state = AL_PLAYING;
 }
 
-void NutshellAudioModule::pause(Ntsh::SoundId audioId) {
+void NtshEngn::AudioModule::pause(NtshEngn::SoundId audioId) {
 	alCall(alSourcePause, m_idToSound[audioId].source);
 	m_idToSound[audioId].state = AL_PAUSED;
 }
 
-void NutshellAudioModule::stop(Ntsh::SoundId audioId) {
+void NtshEngn::AudioModule::stop(NtshEngn::SoundId audioId) {
 	alCall(alSourceStop, m_idToSound[audioId].source);
 	m_idToSound[audioId].state = AL_STOPPED;
 }
 
-bool NutshellAudioModule::isPlaying(Ntsh::SoundId audioId) {
+bool NtshEngn::AudioModule::isPlaying(NtshEngn::SoundId audioId) {
 	return m_idToSound[audioId].state == AL_PLAYING;
 }
 
-void NutshellAudioModule::setGain(Ntsh::SoundId audioId, float newGain) {
+void NtshEngn::AudioModule::setGain(NtshEngn::SoundId audioId, float newGain) {
 	alCall(alSourcef, m_idToSound[audioId].source, AL_GAIN, newGain);
 	m_idToSound[audioId].gain = newGain;
 }
 
-float NutshellAudioModule::getGain(Ntsh::SoundId audioId) {
+float NtshEngn::AudioModule::getGain(NtshEngn::SoundId audioId) {
 	return m_idToSound[audioId].gain;
 }
 
-void NutshellAudioModule::setPitch(Ntsh::SoundId audioId, float newPitch) {
+void NtshEngn::AudioModule::setPitch(NtshEngn::SoundId audioId, float newPitch) {
 	alCall(alSourcef, m_idToSound[audioId].source, AL_PITCH, newPitch);
 	m_idToSound[audioId].pitch = newPitch;
 }
 
-float NutshellAudioModule::getPitch(Ntsh::SoundId audioId) {
+float NtshEngn::AudioModule::getPitch(NtshEngn::SoundId audioId) {
 	return m_idToSound[audioId].pitch;
 }
 
-extern "C" NTSH_MODULE_API NutshellAudioModuleInterface* createModule() {
-	return new NutshellAudioModule;
+extern "C" NTSHENGN_MODULE_API NtshEngn::AudioModuleInterface* createModule() {
+	return new NtshEngn::AudioModule;
 }
 
-extern "C" NTSH_MODULE_API void destroyModule(NutshellAudioModuleInterface* m) {
+extern "C" NTSHENGN_MODULE_API void destroyModule(NtshEngn::AudioModuleInterface* m) {
 	delete m;
 }
