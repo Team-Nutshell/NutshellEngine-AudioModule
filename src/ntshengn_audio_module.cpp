@@ -49,7 +49,7 @@ void NtshEngn::AudioModule::destroy() {
 	alcCloseDevice(m_device);
 }
 
-NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound audio) {
+NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& audio) {
 	OpenALSound newSound;
 	
 	// Generate buffer

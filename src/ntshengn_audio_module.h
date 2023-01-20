@@ -117,7 +117,7 @@ namespace NtshEngn {
 		void destroy();
 
 		// Loads the sound described in the sound parameter in the internal format and returns a unique identifier
-		NtshEngn::SoundId load(const NtshEngn::Sound sound);
+		NtshEngn::SoundId load(const NtshEngn::Sound& sound);
 
 		// Plays the sound with identifier soundId
 		void play(NtshEngn::SoundId soundId);
