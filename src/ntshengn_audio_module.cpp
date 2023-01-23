@@ -49,7 +49,7 @@ void NtshEngn::AudioModule::destroy() {
 	alcCloseDevice(m_device);
 }
 
-NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& audio) {
+NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& sound) {
 	OpenALSound newSound;
 	
 	// Generate buffer
@@ -57,19 +57,19 @@ NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& audio) {
 
 	// Determine format
 	ALenum format = 0;
-	if (audio.channels == 1) {
-		if (audio.bitsPerSample == 8) {
+	if (sound.channels == 1) {
+		if (sound.bitsPerSample == 8) {
 			format = AL_FORMAT_MONO8;
 		}
-		else if (audio.bitsPerSample == 16) {
+		else if (sound.bitsPerSample == 16) {
 			format = AL_FORMAT_MONO16;
 		}
 	}
-	else if (audio.channels == 2) {
-		if (audio.bitsPerSample == 8) {
+	else if (sound.channels == 2) {
+		if (sound.bitsPerSample == 8) {
 			format = AL_FORMAT_STEREO8;
 		}
-		else if (audio.bitsPerSample == 16) {
+		else if (sound.bitsPerSample == 16) {
 			format = AL_FORMAT_STEREO16;
 		}
 	}
@@ -78,7 +78,7 @@ NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& audio) {
 		NTSHENGN_MODULE_ERROR("Error finding the right format.", NtshEngn::Result::ModuleError);
 	}
 
-	alCall(alBufferData, newSound.buffer, format, audio.data.data(), static_cast<ALsizei>(audio.size), audio.sampleRate);
+	alCall(alBufferData, newSound.buffer, format, sound.data.data(), static_cast<ALsizei>(sound.size), sound.sampleRate);
 	alCall(alGenSources, 1, &newSound.source);
 	alCall(alSourcef, newSound.source, AL_GAIN, 1.0f);
 	alCall(alSourcef, newSound.source, AL_PITCH, 1.0f);
