@@ -17,8 +17,8 @@ void NtshEngn::AudioModule::destroy() {
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& audio) {
-	NTSHENGN_UNUSED(audio);
+NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& sound) {
+	NTSHENGN_UNUSED(sound);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 	return 0;
 }
