@@ -8,6 +8,8 @@
 #define alCall(function, ...) alCallImpl(__FILE__, __LINE__, function, __VA_ARGS__)
 
 inline bool alCheckErrors(const std::string& filename, const uint32_t line) {
+	NTSHENGN_UNUSED(filename);
+	NTSHENGN_UNUSED(line);
 	ALenum error = alGetError();
 	if (error != AL_NO_ERROR) {
 		switch (error) {
@@ -55,6 +57,8 @@ auto alCallImpl(const char* filename, const uint32_t line, alFunction function, 
 #define alcCall(function, device, ...) alcCallImpl(__FILE__, __LINE__, function, device, __VA_ARGS__)
 
 inline bool alcCheckErrors(const std::string& filename, const uint32_t line, ALCdevice* device) {
+	NTSHENGN_UNUSED(filename);
+	NTSHENGN_UNUSED(line);
 	ALCenum error = alcGetError(device);
 	if (error != ALC_NO_ERROR) {
 		switch (error) {
