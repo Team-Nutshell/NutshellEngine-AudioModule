@@ -3,6 +3,7 @@
 #include "../external/Module/utils/ntshengn_dynamic_library.h"
 #include "../external/Common/utils/ntshengn_defines.h"
 #include "../external/Common/utils/ntshengn_enums.h"
+#include <limits>
 
 void NtshEngn::AudioModule::init() {
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
@@ -20,7 +21,8 @@ void NtshEngn::AudioModule::destroy() {
 NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& sound) {
 	NTSHENGN_UNUSED(sound);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
-	return 0;
+
+	return std::numeric_limits<NtshEngn::SoundId>::max();
 }
 
 void NtshEngn::AudioModule::play(NtshEngn::SoundId audioId) {
@@ -41,6 +43,7 @@ void NtshEngn::AudioModule::stop(NtshEngn::SoundId audioId) {
 bool NtshEngn::AudioModule::isPlaying(NtshEngn::SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
 	return false;
 }
 
@@ -53,6 +56,7 @@ void NtshEngn::AudioModule::setGain(NtshEngn::SoundId audioId, float newGain) {
 float NtshEngn::AudioModule::getGain(NtshEngn::SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
 	return 0.0f;
 }
 
@@ -65,6 +69,7 @@ void NtshEngn::AudioModule::setPitch(NtshEngn::SoundId audioId, float newPitch) 
 float NtshEngn::AudioModule::getPitch(NtshEngn::SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
 	return 0.0f;
 }
 
