@@ -10,7 +10,7 @@ void NtshEngn::AudioModule::init() {
 		NTSHENGN_MODULE_ERROR("Unable to open audio device.", NtshEngn::Result::ModuleError);
 	}
 
-	// Open context
+	// Create context
 	if (alcCall(alcCreateContext, m_context, m_device, m_device, nullptr)) {
 		if (!m_context) {
 			NTSHENGN_MODULE_ERROR("Unable to create audio context.", NtshEngn::Result::ModuleError);
@@ -93,39 +93,47 @@ NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& sound) {
 }
 
 void NtshEngn::AudioModule::play(NtshEngn::SoundId audioId) {
+	NTSHENGN_ASSERT(m_idToSound.find(audioId) != m_idToSound.end());
 	alCall(alSourcePlay, m_idToSound[audioId].source);
 	m_idToSound[audioId].state = AL_PLAYING;
 }
 
 void NtshEngn::AudioModule::pause(NtshEngn::SoundId audioId) {
+	NTSHENGN_ASSERT(m_idToSound.find(audioId) != m_idToSound.end());
 	alCall(alSourcePause, m_idToSound[audioId].source);
 	m_idToSound[audioId].state = AL_PAUSED;
 }
 
 void NtshEngn::AudioModule::stop(NtshEngn::SoundId audioId) {
+	NTSHENGN_ASSERT(m_idToSound.find(audioId) != m_idToSound.end());
 	alCall(alSourceStop, m_idToSound[audioId].source);
 	m_idToSound[audioId].state = AL_STOPPED;
 }
 
 bool NtshEngn::AudioModule::isPlaying(NtshEngn::SoundId audioId) {
+	NTSHENGN_ASSERT(m_idToSound.find(audioId) != m_idToSound.end());
 	return m_idToSound[audioId].state == AL_PLAYING;
 }
 
 void NtshEngn::AudioModule::setGain(NtshEngn::SoundId audioId, float newGain) {
+	NTSHENGN_ASSERT(m_idToSound.find(audioId) != m_idToSound.end());
 	alCall(alSourcef, m_idToSound[audioId].source, AL_GAIN, newGain);
 	m_idToSound[audioId].gain = newGain;
 }
 
 float NtshEngn::AudioModule::getGain(NtshEngn::SoundId audioId) {
+	NTSHENGN_ASSERT(m_idToSound.find(audioId) != m_idToSound.end());
 	return m_idToSound[audioId].gain;
 }
 
 void NtshEngn::AudioModule::setPitch(NtshEngn::SoundId audioId, float newPitch) {
+	NTSHENGN_ASSERT(m_idToSound.find(audioId) != m_idToSound.end());
 	alCall(alSourcef, m_idToSound[audioId].source, AL_PITCH, newPitch);
 	m_idToSound[audioId].pitch = newPitch;
 }
 
 float NtshEngn::AudioModule::getPitch(NtshEngn::SoundId audioId) {
+	NTSHENGN_ASSERT(m_idToSound.find(audioId) != m_idToSound.end());
 	return m_idToSound[audioId].pitch;
 }
 
