@@ -114,7 +114,7 @@ namespace NtshEngn {
 
 	class AudioModule : public AudioModuleInterface {
 	public:
-		AudioModule() : AudioModuleInterface("NutshellEngine Audio OpenAL Soft Module") {}
+		AudioModule() : AudioModuleInterface("NutshellEngine OpenAL Soft Audio Module") {}
 
 		void init();
 		void update(double dt);
