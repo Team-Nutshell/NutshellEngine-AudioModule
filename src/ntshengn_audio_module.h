@@ -121,35 +121,35 @@ namespace NtshEngn {
 		void destroy();
 
 		// Loads the sound described in the sound parameter in the internal format and returns a unique identifier
-		NtshEngn::SoundId load(const NtshEngn::Sound& sound);
+		SoundId load(const Sound& sound);
 
 		// Plays the sound with identifier soundId
-		void play(NtshEngn::SoundId soundId);
+		void play(SoundId soundId);
 		// Pauses the sound with identifier soundId
-		void pause(NtshEngn::SoundId soundId);
+		void pause(SoundId soundId);
 		// Stops the sound with identifier soundId
-		void stop(NtshEngn::SoundId soundId);
+		void stop(SoundId soundId);
 
 		// Returns true if the sound with identifier soundId is currently playing, else, returns false
-		bool isPlaying(NtshEngn::SoundId soundId);
+		bool isPlaying(SoundId soundId);
 
 		// Sets the gain of the sound with identifier soundId
-		void setGain(NtshEngn::SoundId soundId, float newGain);
+		void setGain(SoundId soundId, float newGain);
 		// Gets the gain of the sound with identifier soundId
-		float getGain(NtshEngn::SoundId soundId);
+		float getGain(SoundId soundId);
 
 		// Sets the pitch of the sound with identifier soundId
-		void setPitch(NtshEngn::SoundId soundId, float newPitch);
+		void setPitch(SoundId soundId, float newPitch);
 		// Gets the pitch of the sound with identifier soundId
-		float getPitch(NtshEngn::SoundId soundId);
+		float getPitch(SoundId soundId);
 
 	private:
 		ALCdevice* m_device = nullptr;
 		ALCcontext* m_context = nullptr;
 
-		std::unordered_map<NtshEngn::SoundId, OpenALSound> m_idToSound;
+		std::unordered_map<SoundId, OpenALSound> m_idToSound;
 
-		NtshEngn::SoundId m_id = 0;
+		SoundId m_id = 0;
 	};
 
 }
