@@ -5,7 +5,7 @@ namespace NtshEngn {
 
 	class AudioModule : public AudioModuleInterface {
 	public:
-		AudioModule() : AudioModuleInterface("NutshellEngine Audio Test Module") {}
+		AudioModule() : AudioModuleInterface("NutshellEngine Default Audio Module") {}
 
 		void init();
 		void update(double dt);

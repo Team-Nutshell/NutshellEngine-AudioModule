@@ -18,55 +18,55 @@ void NtshEngn::AudioModule::destroy() {
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-NtshEngn::SoundId NtshEngn::AudioModule::load(const NtshEngn::Sound& sound) {
+NtshEngn::SoundId NtshEngn::AudioModule::load(const Sound& sound) {
 	NTSHENGN_UNUSED(sound);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
-	return std::numeric_limits<NtshEngn::SoundId>::max();
+	return std::numeric_limits<SoundId>::max();
 }
 
-void NtshEngn::AudioModule::play(NtshEngn::SoundId audioId) {
+void NtshEngn::AudioModule::play(SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-void NtshEngn::AudioModule::pause(NtshEngn::SoundId audioId) {
+void NtshEngn::AudioModule::pause(SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-void NtshEngn::AudioModule::stop(NtshEngn::SoundId audioId) {
+void NtshEngn::AudioModule::stop(SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-bool NtshEngn::AudioModule::isPlaying(NtshEngn::SoundId audioId) {
+bool NtshEngn::AudioModule::isPlaying(SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
 	return false;
 }
 
-void NtshEngn::AudioModule::setGain(NtshEngn::SoundId audioId, float newGain) {
+void NtshEngn::AudioModule::setGain(SoundId audioId, float newGain) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_UNUSED(newGain);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-float NtshEngn::AudioModule::getGain(NtshEngn::SoundId audioId) {
+float NtshEngn::AudioModule::getGain(SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
 	return 0.0f;
 }
 
-void NtshEngn::AudioModule::setPitch(NtshEngn::SoundId audioId, float newPitch) {
+void NtshEngn::AudioModule::setPitch(SoundId audioId, float newPitch) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_UNUSED(newPitch);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-float NtshEngn::AudioModule::getPitch(NtshEngn::SoundId audioId) {
+float NtshEngn::AudioModule::getPitch(SoundId audioId) {
 	NTSHENGN_UNUSED(audioId);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
