@@ -1,8 +1,8 @@
 #include "ntshengn_audio_module.h"
-#include "../external/Module/utils/ntshengn_module_defines.h"
-#include "../external/Module/utils/ntshengn_dynamic_library.h"
-#include "../external/Common/utils/ntshengn_defines.h"
-#include "../external/Common/utils/ntshengn_enums.h"
+#include "../Module/utils/ntshengn_module_defines.h"
+#include "../Module/utils/ntshengn_dynamic_library.h"
+#include "../Common/utils/ntshengn_defines.h"
+#include "../Common/utils/ntshengn_enums.h"
 #include <limits>
 
 void NtshEngn::AudioModule::init() {
