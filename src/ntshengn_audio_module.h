@@ -1,6 +1,6 @@
 #pragma once
-#include "../external/Common/module_interfaces/ntshengn_audio_module_interface.h"
-#include "../external/Module/utils/ntshengn_module_defines.h"
+#include "../Common/module_interfaces/ntshengn_audio_module_interface.h"
+#include "../Module/utils/ntshengn_module_defines.h"
 #include "../external/openal-soft/include/AL/al.h"
 #include "../external/openal-soft/include/AL/alc.h"
 #include <unordered_map>
