@@ -94,46 +94,54 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 
 void NtshEngn::AudioModule::play(SoundID soundID) {
 	NTSHENGN_ASSERT(m_idToSound.find(soundID) != m_idToSound.end());
+
 	alCall(alSourcePlay, m_idToSound[soundID].source);
 	m_idToSound[soundID].state = AL_PLAYING;
 }
 
 void NtshEngn::AudioModule::pause(SoundID soundID) {
 	NTSHENGN_ASSERT(m_idToSound.find(soundID) != m_idToSound.end());
+
 	alCall(alSourcePause, m_idToSound[soundID].source);
 	m_idToSound[soundID].state = AL_PAUSED;
 }
 
 void NtshEngn::AudioModule::stop(SoundID soundID) {
 	NTSHENGN_ASSERT(m_idToSound.find(soundID) != m_idToSound.end());
+
 	alCall(alSourceStop, m_idToSound[soundID].source);
 	m_idToSound[soundID].state = AL_STOPPED;
 }
 
 bool NtshEngn::AudioModule::isPlaying(SoundID soundID) {
 	NTSHENGN_ASSERT(m_idToSound.find(soundID) != m_idToSound.end());
+
 	return m_idToSound[soundID].state == AL_PLAYING;
 }
 
 void NtshEngn::AudioModule::setGain(SoundID soundID, float newGain) {
 	NTSHENGN_ASSERT(m_idToSound.find(soundID) != m_idToSound.end());
+
 	alCall(alSourcef, m_idToSound[soundID].source, AL_GAIN, newGain);
 	m_idToSound[soundID].gain = newGain;
 }
 
 float NtshEngn::AudioModule::getGain(SoundID soundID) {
 	NTSHENGN_ASSERT(m_idToSound.find(soundID) != m_idToSound.end());
+
 	return m_idToSound[soundID].gain;
 }
 
 void NtshEngn::AudioModule::setPitch(SoundID soundID, float newPitch) {
 	NTSHENGN_ASSERT(m_idToSound.find(soundID) != m_idToSound.end());
+
 	alCall(alSourcef, m_idToSound[soundID].source, AL_PITCH, newPitch);
 	m_idToSound[soundID].pitch = newPitch;
 }
 
 float NtshEngn::AudioModule::getPitch(SoundID soundID) {
 	NTSHENGN_ASSERT(m_idToSound.find(soundID) != m_idToSound.end());
+	
 	return m_idToSound[soundID].pitch;
 }
 
