@@ -22,7 +22,7 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 	NTSHENGN_UNUSED(sound);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
-	return std::numeric_limits<SoundID>::max();
+	return NTSHENGN_SOUND_UNKNOWN;
 }
 
 void NtshEngn::AudioModule::play(SoundID soundID) {
