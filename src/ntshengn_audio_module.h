@@ -123,7 +123,7 @@ namespace NtshEngn {
 		// Loads the sound described in the sound parameter in the internal format and returns a unique identifier
 		SoundID load(const Sound& sound);
 
-		// Plays the sound with identifier soundID
+		// Plays the sound with identifier soundID, if the sound is paused, it is resumed
 		void play(SoundID soundID);
 		// Pauses the sound with identifier soundID
 		void pause(SoundID soundID);
