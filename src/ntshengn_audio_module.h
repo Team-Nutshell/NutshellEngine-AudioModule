@@ -132,7 +132,7 @@ namespace NtshEngn {
 		// Plays the sound with identifier soundID at a certain gain and pitch and returns a unique identifier
 		SoundSourceID playSound(SoundID soundID, float gain, float pitch);
 		// Plays the sound with identifier soundID at a specific position and at a certain gain and pitch and returns a unique identifier
-		SoundSourceID playSoundAtPosition(SoundSourceID soundSourceID, const Math::vec3& position, float gain, float pitch);
+		SoundSourceID playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch);
 		// Pauses the sound with identifier soundSourceID
 		void resumeSoundSource(SoundSourceID soundSourceID);
 		// Pauses the sound with identifier soundSourceID
