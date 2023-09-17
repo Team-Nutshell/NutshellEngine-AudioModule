@@ -14,25 +14,34 @@ namespace NtshEngn {
 		// Loads the sound described in the sound parameter in the internal format and returns a unique identifier
 		SoundID load(const Sound& sound);
 
-		// Plays the sound with identifier soundID, if the sound is paused, it is resumed
-		void play(SoundID soundID);
-		// Pauses the sound with identifier soundID
-		void pause(SoundID soundID);
-		// Stops the sound with identifier soundID
-		void stop(SoundID soundID);
+		// Plays the sound with identifier soundID at a certain gain and pitch and returns a unique identifier
+		SoundSourceID playSound(SoundID soundID, float gain, float pitch);
+		// Plays the sound with identifier soundID at a specific position and at a certain gain and pitch and returns a unique identifier
+		SoundSourceID playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch);
+		// Pauses the sound with identifier soundSourceID
+		void resumeSoundSource(SoundSourceID soundSourceID);
+		// Pauses the sound with identifier soundSourceID
+		void pauseSoundSource(SoundSourceID soundSourceID);
+		// Stops the sound with identifier soundSourceID
+		void stopSoundSource(SoundSourceID soundSourceID);
 
-		// Returns true if the sound with identifier soundID is currently playing, else, returns false
-		bool isPlaying(SoundID soundID);
+		// Returns the state of the sound source
+		SoundSourceState getSoundSourceState(SoundSourceID soundSourceID);
+		// Returns true if the sound with identifier soundID has any sound source currently playing, else, returns false
+		bool isSoundPlaying(SoundID soundID);
 
-		// Sets the gain of the sound with identifier soundID
-		void setGain(SoundID soundID, float newGain);
-		// Gets the gain of the sound with identifier soundID
-		float getGain(SoundID soundID);
+		// Sets the gain of the sound source with identifier soundSourceID
+		void setSoundSourceGain(SoundSourceID soundSourceID, float newGain);
+		// Gets the gain of the sound source with identifier soundSourceID
+		float getSoundSourceGain(SoundSourceID soundSourceID);
 
-		// Sets the pitch of the sound with identifier soundID
-		void setPitch(SoundID soundID, float newPitch);
-		// Gets the pitch of the sound with identifier soundID
-		float getPitch(SoundID soundID);
+		// Sets the pitch of the sound source with identifier soundSourceID
+		void setSoundSourcePitch(SoundSourceID soundSourceID, float newPitch);
+		// Gets the pitch of the sound source with identifier soundSourceID
+		float getSoundSourcePitch(SoundSourceID soundSourceID);
+
+		// Sets the entity that will listen to sounds played with playAtPosition
+		void setSoundListenerEntity(Entity entity);
 	};
 
 }

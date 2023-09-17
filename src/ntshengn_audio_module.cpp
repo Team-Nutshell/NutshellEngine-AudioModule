@@ -25,52 +25,82 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 	return NTSHENGN_SOUND_UNKNOWN;
 }
 
-void NtshEngn::AudioModule::play(SoundID soundID) {
+NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float gain, float pitch) {
 	NTSHENGN_UNUSED(soundID);
+	NTSHENGN_UNUSED(gain);
+	NTSHENGN_UNUSED(pitch);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
+	return NTSHENGN_SOUND_SOURCE_UNKNOWN;
+}
+
+NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch) {
+	NTSHENGN_UNUSED(soundID);
+	NTSHENGN_UNUSED(position);
+	NTSHENGN_UNUSED(gain);
+	NTSHENGN_UNUSED(pitch);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
+	return NTSHENGN_SOUND_SOURCE_UNKNOWN;
+}
+
+void NtshEngn::AudioModule::resumeSoundSource(SoundSourceID soundSourceID) {
+	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-void NtshEngn::AudioModule::pause(SoundID soundID) {
-	NTSHENGN_UNUSED(soundID);
+void NtshEngn::AudioModule::pauseSoundSource(SoundSourceID soundSourceID) {
+	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-void NtshEngn::AudioModule::stop(SoundID soundID) {
-	NTSHENGN_UNUSED(soundID);
+void NtshEngn::AudioModule::stopSoundSource(SoundSourceID soundSourceID) {
+	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-bool NtshEngn::AudioModule::isPlaying(SoundID soundID) {
+NtshEngn::SoundSourceState NtshEngn::AudioModule::getSoundSourceState(SoundSourceID soundSourceID) {
+	NTSHENGN_UNUSED(soundSourceID);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
+	return SoundSourceState::Stopped;
+}
+
+bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	NTSHENGN_UNUSED(soundID);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
 	return false;
 }
 
-void NtshEngn::AudioModule::setGain(SoundID soundID, float newGain) {
-	NTSHENGN_UNUSED(soundID);
+void NtshEngn::AudioModule::setSoundSourceGain(SoundSourceID soundSourceID, float newGain) {
+	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_UNUSED(newGain);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-float NtshEngn::AudioModule::getGain(SoundID soundID) {
-	NTSHENGN_UNUSED(soundID);
+float NtshEngn::AudioModule::getSoundSourceGain(SoundSourceID soundSourceID) {
+	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
 	return 0.0f;
 }
 
-void NtshEngn::AudioModule::setPitch(SoundID soundID, float newPitch) {
-	NTSHENGN_UNUSED(soundID);
+void NtshEngn::AudioModule::setSoundSourcePitch(SoundSourceID soundSourceID, float newPitch) {
+	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_UNUSED(newPitch);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-float NtshEngn::AudioModule::getPitch(SoundID soundID) {
-	NTSHENGN_UNUSED(soundID);
+float NtshEngn::AudioModule::getSoundSourcePitch(SoundSourceID soundSourceID) {
+	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
 	return 0.0f;
+}
+
+void NtshEngn::AudioModule::setSoundListenerEntity(Entity entity) {
+	NTSHENGN_UNUSED(entity);
 }
 
 extern "C" NTSHENGN_MODULE_API NtshEngn::AudioModuleInterface* createModule() {
