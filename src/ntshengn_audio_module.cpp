@@ -2,6 +2,7 @@
 #include "../Module/utils/ntshengn_dynamic_library.h"
 #include "../Common/utils/ntshengn_defines.h"
 #include "../Common/utils/ntshengn_enums.h"
+#include "../external/openal-soft/include/AL/alext.h"
 
 void NtshEngn::AudioModule::init() {
 	// Open audio device
@@ -141,6 +142,7 @@ NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID sound
 	alCall(alGenSources, 1, &newSoundSource.source);
 	alCall(alSourcef, newSoundSource.source, AL_GAIN, gain);
 	alCall(alSourcef, newSoundSource.source, AL_PITCH, pitch);
+	alCall(alSourcei, newSoundSource.source, AL_SOURCE_SPATIALIZE_SOFT, AL_TRUE);
 	alCall(alSourcei, newSoundSource.source, AL_SOURCE_RELATIVE, AL_FALSE);
 	alCall(alSource3f, newSoundSource.source, AL_POSITION, position.x, position.y, position.z);
 	alCall(alSource3f, newSoundSource.source, AL_VELOCITY, 0.0f, 0.0f, 0.0f);
