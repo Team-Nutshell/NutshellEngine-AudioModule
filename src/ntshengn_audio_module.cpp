@@ -38,6 +38,10 @@ void NtshEngn::AudioModule::update(double dt) {
 			alListenerfv(AL_ORIENTATION, listenerOrientation.data());
 		}
 		else {
+			alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
+			std::array<float, 6> listenerOrientation = { 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+			alListenerfv(AL_ORIENTATION, listenerOrientation.data());
+
 			m_listenerEntity = NTSHENGN_ENTITY_UNKNOWN;
 		}
 	}
