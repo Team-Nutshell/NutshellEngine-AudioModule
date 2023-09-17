@@ -50,6 +50,7 @@ void NtshEngn::AudioModule::update(double dt) {
 	for (auto it = m_soundSourceIDToSoundSource.begin(); it != m_soundSourceIDToSoundSource.end(); ) {
 		alCall(alGetSourcei, it->second.source, AL_SOURCE_STATE, &it->second.state);
 		if (it->second.state == AL_STOPPED) {
+			alCall(alDeleteSources, 1, &it->second.source);
 			m_soundIDToSound[it->second.soundID].soundSourceIDs.erase(it->first);
 			it = m_soundSourceIDToSoundSource.erase(it);
 		}
