@@ -30,6 +30,11 @@ namespace NtshEngn {
 		// Returns true if the sound with identifier soundID has any sound source currently playing, else, returns false
 		bool isSoundPlaying(SoundID soundID);
 
+		// Sets the position of the sound source with identifieer soundSourceID
+		void setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& position);
+		// Gets the position of the sound source with identifier soundSourceID
+		Math::vec3 getSoundSourcePosition(SoundSourceID soundSourceID);
+
 		// Sets the gain of the sound source with identifier soundSourceID
 		void setSoundSourceGain(SoundSourceID soundSourceID, float newGain);
 		// Gets the gain of the sound source with identifier soundSourceID

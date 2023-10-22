@@ -73,6 +73,19 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	return false;
 }
 
+void NtshEngn::AudioModule::setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& position) {
+	NTSHENGN_UNUSED(soundSourceID);
+	NTSHENGN_UNUSED(position);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+}
+
+NtshEngn::Math::vec3 NtshEngn::AudioModule::getSoundSourcePosition(SoundSourceID soundSourceID) {
+	NTSHENGN_UNUSED(soundSourceID);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
+	return Math::vec3(0.0f, 0.0f, 0.0f);
+}
+
 void NtshEngn::AudioModule::setSoundSourceGain(SoundSourceID soundSourceID, float newGain) {
 	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_UNUSED(newGain);
