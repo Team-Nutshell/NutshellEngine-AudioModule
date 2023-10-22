@@ -220,11 +220,11 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	return false;
 }
 
-void NtshEngn::AudioModule::setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& position) {
+void NtshEngn::AudioModule::setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& newPosition) {
 	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
 
-	alCall(alSource3f, m_soundSourceIDToSoundSource[soundSourceID].source, AL_POSITION, position.x, position.y, position.z);
-	m_soundSourceIDToSoundSource[soundSourceID].position = position;
+	alCall(alSource3f, m_soundSourceIDToSoundSource[soundSourceID].source, AL_POSITION, newPosition.x, newPosition.y, newPosition.z);
+	m_soundSourceIDToSoundSource[soundSourceID].position = newPosition;
 }
 
 NtshEngn::Math::vec3 NtshEngn::AudioModule::getSoundSourcePosition(SoundSourceID soundSourceID)  {
