@@ -6,7 +6,7 @@
 #include <vector>
 #include <unordered_map>
 
-#define alCall(function, ...) alCallImpl(__FILE__, __LINE__, function, __VA_ARGS__)
+#define alCall(function, ...) alCallImpl(std::filesystem::path(__FILE__).filename().string().c_str(), __LINE__, function, __VA_ARGS__)
 
 inline bool alCheckErrors(const std::string& filename, const uint32_t line) {
 	NTSHENGN_UNUSED(filename);
@@ -107,6 +107,7 @@ struct OpenALSoundSource {
 	NtshEngn::SoundID soundID;
 	ALuint source;
 	ALint state;
+	NtshEngn::Math::vec3 position;
 	float gain = 1.0f;
 	float pitch = 1.0f;
 };
@@ -144,6 +145,11 @@ namespace NtshEngn {
 		SoundSourceState getSoundSourceState(SoundSourceID soundSourceID);
 		// Returns true if the sound with identifier soundID has any sound source currently playing, else, returns false
 		bool isSoundPlaying(SoundID soundID);
+
+		// Sets the position of the sound source with identifieer soundSourceID
+		void setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& position);
+		// Gets the position of the sound source with identifier soundSourceID
+		Math::vec3 getSoundSourcePosition(SoundSourceID soundSourceID);
 
 		// Sets the gain of the sound source with identifier soundSourceID
 		void setSoundSourceGain(SoundSourceID soundSourceID, float newGain);
