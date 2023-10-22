@@ -73,9 +73,9 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	return false;
 }
 
-void NtshEngn::AudioModule::setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& position) {
+void NtshEngn::AudioModule::setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& newPosition) {
 	NTSHENGN_UNUSED(soundSourceID);
-	NTSHENGN_UNUSED(position);
+	NTSHENGN_UNUSED(newPosition);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
