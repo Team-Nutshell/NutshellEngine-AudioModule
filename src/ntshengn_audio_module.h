@@ -1,5 +1,5 @@
 #pragma once
-#include "../Common/module_interfaces/ntshengn_audio_module_interface.h"
+#include "../Common/modules/ntshengn_audio_module_interface.h"
 
 namespace NtshEngn {
 
