@@ -1,5 +1,5 @@
 #pragma once
-#include "../Common/module_interfaces/ntshengn_audio_module_interface.h"
+#include "../Common/modules/ntshengn_audio_module_interface.h"
 #include "../Module/utils/ntshengn_module_defines.h"
 #include "../external/openal-soft/include/AL/al.h"
 #include "../external/openal-soft/include/AL/alc.h"
