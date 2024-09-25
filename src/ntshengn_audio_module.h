@@ -44,9 +44,6 @@ namespace NtshEngn {
 		void setSoundSourcePitch(SoundSourceID soundSourceID, float newPitch);
 		// Gets the pitch of the sound source with identifier soundSourceID
 		float getSoundSourcePitch(SoundSourceID soundSourceID);
-
-		// Sets the entity that will listen to sounds played with playAtPosition
-		void setSoundListenerEntity(Entity entity);
 	};
 
 }

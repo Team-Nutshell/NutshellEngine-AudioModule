@@ -112,10 +112,6 @@ float NtshEngn::AudioModule::getSoundSourcePitch(SoundSourceID soundSourceID) {
 	return 0.0f;
 }
 
-void NtshEngn::AudioModule::setSoundListenerEntity(Entity entity) {
-	NTSHENGN_UNUSED(entity);
-}
-
 extern "C" NTSHENGN_MODULE_API NtshEngn::AudioModuleInterface* createModule() {
 	return new NtshEngn::AudioModule;
 }
