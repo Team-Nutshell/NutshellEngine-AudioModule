@@ -31,20 +31,21 @@ void NtshEngn::AudioModule::update(double dt) {
 	NTSHENGN_UNUSED(dt);
 
 	if (m_listenerEntity != NTSHENGN_ENTITY_UNKNOWN) {
-		if (ecs->entityExists(m_listenerEntity)) {
-			const Transform& listenerTransform = ecs->getComponent<Transform>(m_listenerEntity);
+		const SoundListener& listenerSoundListener = ecs->getComponent<SoundListener>(m_listenerEntity);
+		const Transform& listenerTransform = ecs->getComponent<Transform>(m_listenerEntity);
 
-			alListener3f(AL_POSITION, listenerTransform.position.x, listenerTransform.position.y, listenerTransform.position.z);
-			std::array<float, 6> listenerOrientation = { listenerTransform.rotation.x, listenerTransform.rotation.y, listenerTransform.rotation.z, 0.0f, 1.0f, 0.0f };
-			alListenerfv(AL_ORIENTATION, listenerOrientation.data());
-		}
-		else {
-			alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
-			std::array<float, 6> listenerOrientation = { 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f };
-			alListenerfv(AL_ORIENTATION, listenerOrientation.data());
+		alListener3f(AL_POSITION, listenerTransform.position.x, listenerTransform.position.y, listenerTransform.position.z);
 
-			m_listenerEntity = NTSHENGN_ENTITY_UNKNOWN;
-		}
+		const Math::vec3 baseSoundListenerDirection = Math::normalize(listenerSoundListener.forward);
+		const float baseDirectionYaw = std::atan2(baseSoundListenerDirection.z, baseSoundListenerDirection.x);
+		const float baseDirectionPitch = -std::asin(baseSoundListenerDirection.y);
+		const Math::vec3 soundListenerDirection = Math::normalize(Math::vec3(
+			std::cos(baseDirectionPitch + listenerTransform.rotation.x) * std::cos(baseDirectionYaw + listenerTransform.rotation.y),
+			-std::sin(baseDirectionPitch + listenerTransform.rotation.x),
+			std::cos(baseDirectionPitch + listenerTransform.rotation.x) * std::sin(baseDirectionYaw + listenerTransform.rotation.y)
+		));
+		std::array<float, 6> listenerOrientation = { soundListenerDirection.x, soundListenerDirection.y, soundListenerDirection.z, listenerSoundListener.up.x, listenerSoundListener.up.y, listenerSoundListener.up.z };
+		alListenerfv(AL_ORIENTATION, listenerOrientation.data());
 	}
 
 	for (auto it = m_soundSourceIDToSoundSource.begin(); it != m_soundSourceIDToSoundSource.end(); ) {
@@ -259,8 +260,27 @@ float NtshEngn::AudioModule::getSoundSourcePitch(SoundSourceID soundSourceID) {
 	return m_soundSourceIDToSoundSource[soundSourceID].pitch;
 }
 
-void NtshEngn::AudioModule::setSoundListenerEntity(Entity entity) {
-	m_listenerEntity = entity;
+const NtshEngn::ComponentMask NtshEngn::AudioModule::getComponentMask() const {
+	ComponentMask componentMask;
+	componentMask.set(ecs->getComponentID<SoundListener>());
+
+	return componentMask;
+}
+
+void NtshEngn::AudioModule::onEntityComponentAdded(Entity entity, Component componentID) {
+	if (componentID == ecs->getComponentID<SoundListener>()) {
+		if (m_listenerEntity == NTSHENGN_ENTITY_UNKNOWN) {
+			m_listenerEntity = entity;
+		}
+	}
+}
+
+void NtshEngn::AudioModule::onEntityComponentRemoved(Entity entity, Component componentID) {
+	if (componentID == ecs->getComponentID<SoundListener>()) {
+		if (m_listenerEntity == entity) {
+			m_listenerEntity = NTSHENGN_ENTITY_UNKNOWN;
+		}
+	}
 }
 
 extern "C" NTSHENGN_MODULE_API NtshEngn::AudioModuleInterface* createModule() {

@@ -161,8 +161,11 @@ namespace NtshEngn {
 		// Gets the pitch of the sound source with identifier soundSourceID
 		float getSoundSourcePitch(SoundSourceID soundSourceID);
 
-		// Sets the entity that will listen to sounds played with playAtPosition
-		void setSoundListenerEntity(Entity entity);
+	public:
+		const ComponentMask getComponentMask() const;
+
+		void onEntityComponentAdded(Entity entity, Component componentID);
+		void onEntityComponentRemoved(Entity entity, Component componentID);
 
 	private:
 		ALCdevice* m_device = nullptr;
