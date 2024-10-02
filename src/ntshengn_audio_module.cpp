@@ -9,7 +9,7 @@ void NtshEngn::AudioModule::init() {
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-void NtshEngn::AudioModule::update(double dt) {
+void NtshEngn::AudioModule::update(float dt) {
 	NTSHENGN_UNUSED(dt);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
