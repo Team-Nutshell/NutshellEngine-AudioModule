@@ -124,7 +124,7 @@ namespace NtshEngn {
 		AudioModule() : AudioModuleInterface("NutshellEngine OpenAL Soft Audio Module") {}
 
 		void init();
-		void update(double dt);
+		void update(float dt);
 		void destroy();
 
 		// Loads the sound described in the sound parameter in the internal format and returns a unique identifier

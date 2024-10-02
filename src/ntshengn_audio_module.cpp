@@ -27,7 +27,7 @@ void NtshEngn::AudioModule::init() {
 	}
 }
 
-void NtshEngn::AudioModule::update(double dt) {
+void NtshEngn::AudioModule::update(float dt) {
 	NTSHENGN_UNUSED(dt);
 
 	if (m_listenerEntity != NTSHENGN_ENTITY_UNKNOWN) {
