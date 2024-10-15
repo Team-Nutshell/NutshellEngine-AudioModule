@@ -113,7 +113,7 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 }
 
 NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float gain, float pitch) {
-	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end());
+	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
 
 	OpenALSoundSource newSoundSource;
 	alCall(alGenSources, 1, &newSoundSource.source);
@@ -140,7 +140,7 @@ NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float 
 }
 
 NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch) {
-	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end());
+	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
 
 	OpenALSoundSource newSoundSource;
 	alCall(alGenSources, 1, &newSoundSource.source);
@@ -169,21 +169,21 @@ NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID sound
 }
 
 void NtshEngn::AudioModule::resumeSoundSource(SoundSourceID soundSourceID) {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	alCall(alSourcePlay, m_soundSourceIDToSoundSource[soundSourceID].source);
 	m_soundSourceIDToSoundSource[soundSourceID].state = AL_PLAYING;
 }
 
 void NtshEngn::AudioModule::pauseSoundSource(SoundSourceID soundSourceID) {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	alCall(alSourcePause, m_soundSourceIDToSoundSource[soundSourceID].source);
 	m_soundSourceIDToSoundSource[soundSourceID].state = AL_PAUSED;
 }
 
 void NtshEngn::AudioModule::stopSoundSource(SoundSourceID soundSourceID) {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	alCall(alSourceStop, m_soundSourceIDToSoundSource[soundSourceID].source);
 	alCall(alDeleteSources, 1, &m_soundSourceIDToSoundSource[soundSourceID].source);
@@ -210,7 +210,7 @@ NtshEngn::SoundSourceState NtshEngn::AudioModule::getSoundSourceState(SoundSourc
 }
 
 bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
-	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end());
+	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
 
 	for (auto& soundSourceID : m_soundIDToSound[soundID].soundSourceIDs) {
 		if (m_soundSourceIDToSoundSource[soundSourceID].state == AL_PLAYING) {
@@ -222,40 +222,40 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 }
 
 void NtshEngn::AudioModule::setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& newPosition) {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	alCall(alSource3f, m_soundSourceIDToSoundSource[soundSourceID].source, AL_POSITION, newPosition.x, newPosition.y, newPosition.z);
 	m_soundSourceIDToSoundSource[soundSourceID].position = newPosition;
 }
 
 NtshEngn::Math::vec3 NtshEngn::AudioModule::getSoundSourcePosition(SoundSourceID soundSourceID)  {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	return m_soundSourceIDToSoundSource[soundSourceID].position;
 }
 
 void NtshEngn::AudioModule::setSoundSourceGain(SoundSourceID soundSourceID, float newGain) {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	alCall(alSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_GAIN, newGain);
 	m_soundSourceIDToSoundSource[soundSourceID].gain = newGain;
 }
 
 float NtshEngn::AudioModule::getSoundSourceGain(SoundSourceID soundSourceID) {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	return m_soundSourceIDToSoundSource[soundSourceID].gain;
 }
 
 void NtshEngn::AudioModule::setSoundSourcePitch(SoundSourceID soundSourceID, float newPitch) {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	alCall(alSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_PITCH, newPitch);
 	m_soundSourceIDToSoundSource[soundSourceID].pitch = newPitch;
 }
 
 float NtshEngn::AudioModule::getSoundSourcePitch(SoundSourceID soundSourceID) {
-	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end());
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	return m_soundSourceIDToSoundSource[soundSourceID].pitch;
 }
