@@ -8,13 +8,13 @@ void NtshEngn::AudioModule::init() {
 	// Open audio device
 	m_device = alcOpenDevice(nullptr);
 	if (!m_device) {
-		NTSHENGN_MODULE_ERROR("Unable to open audio device.", Result::ModuleError);
+		NTSHENGN_MODULE_ERROR("Unable to open audio device.");
 	}
 
 	// Create context
 	if (alcCall(alcCreateContext, m_context, m_device, m_device, nullptr)) {
 		if (!m_context) {
-			NTSHENGN_MODULE_ERROR("Unable to create audio context.", Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("Unable to create audio context.");
 		}
 	}
 
@@ -22,7 +22,7 @@ void NtshEngn::AudioModule::init() {
 	ALCboolean makeContextCurrent = ALC_FALSE;
 	if (!alcCall(alcMakeContextCurrent, makeContextCurrent, m_device, m_context)) {
 		if (makeContextCurrent != ALC_TRUE) {
-			NTSHENGN_MODULE_ERROR("Unable to make audio context current.", Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("Unable to make audio context current.");
 		}
 	}
 }
@@ -102,7 +102,7 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 	}
 
 	if (format == 0) {
-		NTSHENGN_MODULE_ERROR("Error finding the right format.", Result::ModuleError);
+		NTSHENGN_MODULE_ERROR("Error finding the right format.");
 	}
 
 	alCall(alBufferData, newSound.buffer, format, sound.data.data(), static_cast<ALsizei>(sound.size), sound.sampleRate);

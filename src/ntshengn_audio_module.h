@@ -15,22 +15,22 @@ inline bool alCheckErrors(const std::string& filename, const uint32_t line) {
 	if (error != AL_NO_ERROR) {
 		switch (error) {
 		case AL_INVALID_NAME:
-			NTSHENGN_MODULE_ERROR("AL Error: Name is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("AL Error: Name is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		case AL_INVALID_ENUM:
-			NTSHENGN_MODULE_ERROR("AL Error: Enum is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("AL Error: Enum is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		case AL_INVALID_VALUE:
-			NTSHENGN_MODULE_ERROR("AL Error: Value is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("AL Error: Value is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		case AL_INVALID_OPERATION:
-			NTSHENGN_MODULE_ERROR("AL Error: Operation is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("AL Error: Operation is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		case AL_OUT_OF_MEMORY:
-			NTSHENGN_MODULE_ERROR("AL Error: Out of memory.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("AL Error: Out of memory.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		default:
-			NTSHENGN_MODULE_ERROR("AL Error: Unknown error.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("AL Error: Unknown error.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		}
 	}
@@ -64,22 +64,22 @@ inline bool alcCheckErrors(const std::string& filename, const uint32_t line, ALC
 	if (error != ALC_NO_ERROR) {
 		switch (error) {
 		case ALC_INVALID_DEVICE:
-			NTSHENGN_MODULE_ERROR("ALC Error: Device is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("ALC Error: Device is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		case ALC_INVALID_CONTEXT:
-			NTSHENGN_MODULE_ERROR("ALC Error: Context is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("ALC Error: Context is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		case ALC_INVALID_ENUM:
-			NTSHENGN_MODULE_ERROR("ALC Error: Enum is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("ALC Error: Enum is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		case ALC_INVALID_VALUE:
-			NTSHENGN_MODULE_ERROR("ALC Error: Value is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("ALC Error: Value is invalid.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		case ALC_OUT_OF_MEMORY:
-			NTSHENGN_MODULE_ERROR("AL Error: Out of memory.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("AL Error: Out of memory.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		default:
-			NTSHENGN_MODULE_ERROR("ALC Error: Unknown error.\nFile: " + filename + "\nLine: " + std::to_string(line), NtshEngn::Result::ModuleError);
+			NTSHENGN_MODULE_ERROR("ALC Error: Unknown error.\nFile: " + filename + "\nLine: " + std::to_string(line));
 			break;
 		}
 	}
