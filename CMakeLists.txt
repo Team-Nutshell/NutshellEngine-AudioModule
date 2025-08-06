@@ -81,6 +81,7 @@ target_compile_definitions(${PROJECT_NAME}
 
 set_target_properties(${PROJECT_NAME}
 	PROPERTIES
+	OUTPUT_NAME "NutshellEngine-AudioModule-OpenAL-Soft"
 	DEFINE_SYMBOL "NutshellEngineModule_EXPORTS")
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
