@@ -12,7 +12,8 @@ void NtshEngn::AudioModule::init() {
 	}
 
 	// Create context
-	if (alcCall(alcCreateContext, m_context, m_device, m_device, nullptr)) {
+	std::array<ALCint, 3> createContextAttribs = { ALC_HRTF_SOFT, ALC_FALSE, 0 };
+	if (alcCall(alcCreateContext, m_context, m_device, m_device, createContextAttribs.data())) {
 		if (!m_context) {
 			NTSHENGN_MODULE_ERROR("Unable to create audio context.");
 		}
