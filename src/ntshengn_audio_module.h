@@ -183,6 +183,8 @@ namespace NtshEngn {
 		SoundID m_soundID = 0;
 		SoundID m_soundSourceID = 0;
 
+		std::unordered_map<const Sound*, SoundID> m_soundAddresses;
+
 		Entity m_listenerEntity = NTSHENGN_ENTITY_UNKNOWN;
 	};
 

@@ -78,6 +78,12 @@ void NtshEngn::AudioModule::destroy() {
 }
 
 NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
+	if (m_soundAddresses.find(&sound) != m_soundAddresses.end()) {
+		return m_soundAddresses[&sound];
+	}
+
+	m_soundAddresses[&sound] = m_soundID;
+
 	OpenALSound newSound;
 	
 	// Generate buffer
