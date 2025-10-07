@@ -3,6 +3,7 @@
 #include "../Module/utils/ntshengn_module_defines.h"
 #include "../external/openal-soft/include/AL/al.h"
 #include "../external/openal-soft/include/AL/alc.h"
+#include "../external/openal-soft/include/AL/alext.h"
 #include <vector>
 #include <unordered_map>
 
@@ -172,6 +173,9 @@ namespace NtshEngn {
 
 		void onEntityComponentAdded(Entity entity, Component componentID);
 		void onEntityComponentRemoved(Entity entity, Component componentID);
+		
+	public:
+		bool reopenDevice = false;
 
 	private:
 		ALCdevice* m_device = nullptr;
@@ -185,7 +189,21 @@ namespace NtshEngn {
 
 		std::unordered_map<const Sound*, SoundID> m_soundAddresses;
 
+		LPALCEVENTCONTROLSOFT m_alcEventControlSOFT;
+		LPALCEVENTCALLBACKSOFT m_alcEventCallbackSOFT;
+		LPALCREOPENDEVICESOFT m_alcReopenDeviceSOFT;
+
 		Entity m_listenerEntity = NTSHENGN_ENTITY_UNKNOWN;
 	};
 
+}
+
+void ALC_APIENTRY systemEventCallback(ALCenum eventType, ALCenum deviceType, ALCdevice* device, ALCsizei length, const ALCchar* message, void* userParam) noexcept {
+	NTSHENGN_UNUSED(device);
+	NTSHENGN_UNUSED(length);
+	NTSHENGN_UNUSED(message);
+
+	if ((eventType == ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT) && (deviceType == ALC_PLAYBACK_DEVICE_SOFT)) {
+		static_cast<NtshEngn::AudioModule*>(userParam)->reopenDevice = true;
+	}
 }

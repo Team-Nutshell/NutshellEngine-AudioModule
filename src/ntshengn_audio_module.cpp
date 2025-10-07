@@ -2,7 +2,6 @@
 #include "../Module/utils/ntshengn_dynamic_library.h"
 #include "../Common/utils/ntshengn_defines.h"
 #include "../Common/utils/ntshengn_enums.h"
-#include "../external/openal-soft/include/AL/alext.h"
 
 void NtshEngn::AudioModule::init() {
 	// Open audio device
@@ -26,10 +25,29 @@ void NtshEngn::AudioModule::init() {
 			NTSHENGN_MODULE_ERROR("Unable to make audio context current.");
 		}
 	}
+
+	// Get extensions
+	if (alcIsExtensionPresent(m_device, "ALC_SOFT_system_events") && alcIsExtensionPresent(m_device, "ALC_SOFT_reopen_device")) {
+		m_alcEventControlSOFT = static_cast<LPALCEVENTCONTROLSOFT>(alcGetProcAddress(m_device, "alcEventControlSOFT"));
+		m_alcEventCallbackSOFT = static_cast<LPALCEVENTCALLBACKSOFT>(alcGetProcAddress(m_device, "alcEventCallbackSOFT"));
+		m_alcReopenDeviceSOFT = static_cast<LPALCREOPENDEVICESOFT>(alcGetProcAddress(m_device, "alcReopenDeviceSOFT"));
+
+		ALenum eventType = ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT;
+		m_alcEventControlSOFT(1, &eventType, ALC_TRUE);
+
+		m_alcEventCallbackSOFT(systemEventCallback, this);
+	}
 }
 
 void NtshEngn::AudioModule::update(float dt) {
 	NTSHENGN_UNUSED(dt);
+
+	if (reopenDevice) {
+		std::array<ALCint, 3> reopenDeviceAttribs = { ALC_HRTF_SOFT, ALC_FALSE, 0 };
+		m_alcReopenDeviceSOFT(m_device, nullptr, reopenDeviceAttribs.data());
+
+		reopenDevice = false;
+	}
 
 	if (m_listenerEntity != NTSHENGN_ENTITY_UNKNOWN) {
 		const SoundListener& listenerSoundListener = ecs->getComponent<SoundListener>(m_listenerEntity);
