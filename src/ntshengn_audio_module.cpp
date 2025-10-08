@@ -28,9 +28,9 @@ void NtshEngn::AudioModule::init() {
 
 	// Get extensions
 	if (alcIsExtensionPresent(m_device, "ALC_SOFT_system_events") && alcIsExtensionPresent(m_device, "ALC_SOFT_reopen_device")) {
-		m_alcEventControlSOFT = static_cast<LPALCEVENTCONTROLSOFT>(alcGetProcAddress(m_device, "alcEventControlSOFT"));
-		m_alcEventCallbackSOFT = static_cast<LPALCEVENTCALLBACKSOFT>(alcGetProcAddress(m_device, "alcEventCallbackSOFT"));
-		m_alcReopenDeviceSOFT = static_cast<LPALCREOPENDEVICESOFT>(alcGetProcAddress(m_device, "alcReopenDeviceSOFT"));
+		m_alcEventControlSOFT = reinterpret_cast<LPALCEVENTCONTROLSOFT>(alcGetProcAddress(m_device, "alcEventControlSOFT"));
+		m_alcEventCallbackSOFT = reinterpret_cast<LPALCEVENTCALLBACKSOFT>(alcGetProcAddress(m_device, "alcEventCallbackSOFT"));
+		m_alcReopenDeviceSOFT = reinterpret_cast<LPALCREOPENDEVICESOFT>(alcGetProcAddress(m_device, "alcReopenDeviceSOFT"));
 
 		ALenum eventType = ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT;
 		m_alcEventControlSOFT(1, &eventType, ALC_TRUE);
