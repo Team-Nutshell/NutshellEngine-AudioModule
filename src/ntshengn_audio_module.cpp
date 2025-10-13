@@ -127,6 +127,17 @@ bool NtshEngn::AudioModule::isSoundSourceLooping(SoundSourceID soundSourceID) {
 	return false;
 }
 
+void NtshEngn::AudioModule::setMasterGain(float gain) {
+	NTSHENGN_UNUSED(gain);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+}
+
+float NtshEngn::AudioModule::getMasterGain() {
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
+	return 0.0f;
+}
+
 extern "C" NTSHENGN_MODULE_API NtshEngn::AudioModuleInterface* createModule() {
 	return new NtshEngn::AudioModule;
 }

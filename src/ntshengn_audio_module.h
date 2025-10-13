@@ -49,6 +49,11 @@ namespace NtshEngn {
 		void setSoundSourceLooping(SoundSourceID soundSourceID, bool looping);
 		// Returns true if the sound source with identifier soundSourceID is looping, else, returns false
 		bool isSoundSourceLooping(SoundSourceID soundSourceID);
+
+		// Sets the master gain
+		void setMasterGain(float gain);
+		// Returns the master gain
+		float getMasterGain();
 	};
 
 }
