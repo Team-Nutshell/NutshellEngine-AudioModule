@@ -127,8 +127,8 @@ bool NtshEngn::AudioModule::isSoundSourceLooping(SoundSourceID soundSourceID) {
 	return false;
 }
 
-void NtshEngn::AudioModule::setMasterGain(float gain) {
-	NTSHENGN_UNUSED(gain);
+void NtshEngn::AudioModule::setMasterGain(float newGain) {
+	NTSHENGN_UNUSED(newGain);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
