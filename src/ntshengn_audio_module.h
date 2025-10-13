@@ -169,7 +169,7 @@ namespace NtshEngn {
 		bool isSoundSourceLooping(SoundSourceID soundSourceID);
 
 		// Sets the master gain
-		void setMasterGain(float gain);
+		void setMasterGain(float newGain);
 		// Returns the master gain
 		float getMasterGain();
 

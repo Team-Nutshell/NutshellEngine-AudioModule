@@ -300,8 +300,8 @@ bool NtshEngn::AudioModule::isSoundSourceLooping(SoundSourceID soundSourceID) {
 	return m_soundSourceIDToSoundSource[soundSourceID].looping;
 }
 
-void NtshEngn::AudioModule::setMasterGain(float gain) {
-	alCall(alListenerf, AL_GAIN, gain);
+void NtshEngn::AudioModule::setMasterGain(float newGain) {
+	alCall(alListenerf, AL_GAIN, newGain);
 }
 
 float NtshEngn::AudioModule::getMasterGain() {
