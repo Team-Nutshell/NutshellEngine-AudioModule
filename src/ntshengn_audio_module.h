@@ -168,6 +168,11 @@ namespace NtshEngn {
 		// Returns true if the sound source with identifier soundSourceID is looping, else, returns false
 		bool isSoundSourceLooping(SoundSourceID soundSourceID);
 
+		// Sets the master gain
+		void setMasterGain(float gain);
+		// Returns the master gain
+		float getMasterGain();
+
 	public:
 		const ComponentMask getComponentMask() const;
 

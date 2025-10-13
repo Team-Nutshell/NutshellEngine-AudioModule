@@ -300,6 +300,17 @@ bool NtshEngn::AudioModule::isSoundSourceLooping(SoundSourceID soundSourceID) {
 	return m_soundSourceIDToSoundSource[soundSourceID].looping;
 }
 
+void NtshEngn::AudioModule::setMasterGain(float gain) {
+	alCall(alListenerf, AL_GAIN, gain);
+}
+
+float NtshEngn::AudioModule::getMasterGain() {
+	float gain;
+	alCall(alGetListenerf, AL_GAIN, &gain);
+
+	return gain;
+}
+
 const NtshEngn::ComponentMask NtshEngn::AudioModule::getComponentMask() const {
 	ComponentMask componentMask;
 	componentMask.set(ecs->getComponentID<SoundListener>());
