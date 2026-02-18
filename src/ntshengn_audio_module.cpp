@@ -278,18 +278,18 @@ float NtshEngn::AudioModule::getSoundLength(SoundID soundID) {
 	return m_soundIDToSound[soundID].length;
 }
 
-void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float time) {
+void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float newTime) {
 	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	const OpenALSound& sound = m_soundIDToSound[m_soundSourceIDToSoundSource[soundSourceID].soundID];
 	if (m_soundSourceIDToSoundSource[soundSourceID].looping) {
-		time = std::fmod(time, sound.length);
+		newTime = std::fmod(newTime, sound.length);
 	}
 	else {
-		time = sound.length;
+		newTime = sound.length;
 	}
 
-	alCall(alSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_SEC_OFFSET, time);
+	alCall(alSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_SEC_OFFSET, newTime);
 }
 
 float NtshEngn::AudioModule::getSoundSourceTime(SoundSourceID soundSourceID) {

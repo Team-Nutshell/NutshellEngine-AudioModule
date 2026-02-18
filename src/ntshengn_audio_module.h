@@ -153,7 +153,7 @@ namespace NtshEngn {
 		float getSoundLength(SoundID soundID);
 
 		// Sets the current time of a sound source, in seconds
-		void setSoundSourceTime(SoundSourceID soundSourceID, float time);
+		void setSoundSourceTime(SoundSourceID soundSourceID, float newTime);
 		// Returns the current time of a sound source, in seconds
 		float getSoundSourceTime(SoundSourceID soundSourceID);
 
