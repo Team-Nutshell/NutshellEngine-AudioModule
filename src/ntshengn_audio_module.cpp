@@ -84,9 +84,9 @@ float NtshEngn::AudioModule::getSoundLength(SoundID soundID) {
 	return 0.0f;
 }
 
-void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float time) {
+void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float newTime) {
 	NTSHENGN_UNUSED(soundSourceID);
-	NTSHENGN_UNUSED(time);
+	NTSHENGN_UNUSED(newTime);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
