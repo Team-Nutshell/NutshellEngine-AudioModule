@@ -25,22 +25,24 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 	return NTSHENGN_SOUND_UNKNOWN;
 }
 
-NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float gain, float pitch, bool looping) {
+NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float gain, float pitch, bool looping, float startTime) {
 	NTSHENGN_UNUSED(soundID);
 	NTSHENGN_UNUSED(gain);
 	NTSHENGN_UNUSED(pitch);
 	NTSHENGN_UNUSED(looping);
+	NTSHENGN_UNUSED(startTime);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
 	return NTSHENGN_SOUND_SOURCE_UNKNOWN;
 }
 
-NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch, bool looping) {
+NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch, bool looping, float startTime) {
 	NTSHENGN_UNUSED(soundID);
 	NTSHENGN_UNUSED(position);
 	NTSHENGN_UNUSED(gain);
 	NTSHENGN_UNUSED(pitch);
 	NTSHENGN_UNUSED(looping);
+	NTSHENGN_UNUSED(startTime);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
 	return NTSHENGN_SOUND_SOURCE_UNKNOWN;
@@ -73,6 +75,26 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
 	return false;
+}
+
+float NtshEngn::AudioModule::getSoundLength(SoundID soundID) {
+	NTSHENGN_UNUSED(soundID);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
+	return 0.0f;
+}
+
+void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float time) {
+	NTSHENGN_UNUSED(soundSourceID);
+	NTSHENGN_UNUSED(time);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+}
+
+float NtshEngn::AudioModule::getSoundSourceTime(SoundSourceID soundSourceID) {
+	NTSHENGN_UNUSED(soundSourceID);
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
+	return 0.0f;
 }
 
 void NtshEngn::AudioModule::setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& newPosition) {
