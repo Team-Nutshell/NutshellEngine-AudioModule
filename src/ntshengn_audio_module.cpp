@@ -264,6 +264,10 @@ NtshEngn::Math::vec3 NtshEngn::AudioModule::getSoundSourcePosition(SoundSourceID
 void NtshEngn::AudioModule::setSoundSourceGain(SoundSourceID soundSourceID, float newGain) {
 	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
+	if (newGain < 0.0f) {
+		newGain = 0.0f;
+	}
+
 	alCall(alSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_GAIN, newGain);
 	m_soundSourceIDToSoundSource[soundSourceID].gain = newGain;
 }
