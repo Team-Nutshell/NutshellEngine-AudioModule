@@ -103,6 +103,8 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 	m_soundAddresses[&sound] = m_soundID;
 
 	OpenALSound newSound;
+
+	newSound.length = static_cast<float>(sound.data.size()) / static_cast<float>(sound.sampleRate * sound.channels * (sound.bitsPerSample / 8));
 	
 	// Generate buffer
 	alCall(alGenBuffers, 1, &newSound.buffer);
@@ -137,11 +139,22 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 	return m_soundID++;
 }
 
-NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float gain, float pitch, bool looping) {
+NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float gain, float pitch, bool looping, float startTime) {
 	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
+
+	const float length = getSoundLength(soundID);
+	if (startTime > length) {
+		if (looping) {
+			startTime = std::fmod(startTime, getSoundLength(soundID));
+		}
+		else {
+			startTime = length;
+		}
+	}
 
 	OpenALSoundSource newSoundSource;
 	alCall(alGenSources, 1, &newSoundSource.source);
+	alCall(alSourcef, newSoundSource.source, AL_SEC_OFFSET, startTime);
 	alCall(alSourcef, newSoundSource.source, AL_GAIN, gain);
 	alCall(alSourcef, newSoundSource.source, AL_PITCH, pitch);
 	alCall(alSourcei, newSoundSource.source, AL_SOURCE_RELATIVE, AL_TRUE);
@@ -165,11 +178,22 @@ NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float 
 	return m_soundSourceID - 1;
 }
 
-NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch, bool looping) {
+NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch, bool looping, float startTime) {
 	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
+
+	const float length = getSoundLength(soundID);
+	if (startTime > length) {
+		if (looping) {
+			startTime = std::fmod(startTime, getSoundLength(soundID));
+		}
+		else {
+			startTime = length;
+		}
+	}
 
 	OpenALSoundSource newSoundSource;
 	alCall(alGenSources, 1, &newSoundSource.source);
+	alCall(alSourcef, newSoundSource.source, AL_SEC_OFFSET, startTime);
 	alCall(alSourcef, newSoundSource.source, AL_GAIN, gain);
 	alCall(alSourcef, newSoundSource.source, AL_PITCH, pitch);
 	alCall(alSourcei, newSoundSource.source, AL_SOURCE_SPATIALIZE_SOFT, AL_TRUE);
@@ -246,6 +270,35 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	}
 
 	return false;
+}
+
+float NtshEngn::AudioModule::getSoundLength(SoundID soundID) {
+	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
+
+	return m_soundIDToSound[soundID].length;
+}
+
+void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float time) {
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
+
+	const OpenALSound& sound = m_soundIDToSound[m_soundSourceIDToSoundSource[soundSourceID].soundID];
+	if (m_soundSourceIDToSoundSource[soundSourceID].looping) {
+		time = std::fmod(time, sound.length);
+	}
+	else {
+		time = sound.length;
+	}
+
+	alCall(alSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_SEC_OFFSET, time);
+}
+
+float NtshEngn::AudioModule::getSoundSourceTime(SoundSourceID soundSourceID) {
+	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
+
+	float time;
+	alCall(alGetSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_SEC_OFFSET, &time);
+
+	return time;
 }
 
 void NtshEngn::AudioModule::setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& newPosition) {

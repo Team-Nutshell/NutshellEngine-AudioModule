@@ -116,6 +116,7 @@ struct OpenALSoundSource {
 
 struct OpenALSound {
 	ALuint buffer;
+	float length;
 	std::set<NtshEngn::SoundSourceID> soundSourceIDs;
 };
 
@@ -133,9 +134,9 @@ namespace NtshEngn {
 		SoundID load(const Sound& sound);
 
 		// Plays the sound with identifier soundID at a certain gain and pitch, looping or not, and returns a unique identifier
-		SoundSourceID playSound(SoundID soundID, float gain, float pitch, bool looping);
+		SoundSourceID playSound(SoundID soundID, float gain, float pitch, bool looping, float startTime);
 		// Plays the sound with identifier soundID at a specific position and at a certain gain and pitch, looping or not, and returns a unique identifier
-		SoundSourceID playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch, bool looping);
+		SoundSourceID playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch, bool looping, float startTime);
 		// Pauses the sound with identifier soundSourceID
 		void resumeSoundSource(SoundSourceID soundSourceID);
 		// Pauses the sound with identifier soundSourceID
@@ -147,6 +148,14 @@ namespace NtshEngn {
 		SoundSourceState getSoundSourceState(SoundSourceID soundSourceID);
 		// Returns true if the sound with identifier soundID has any sound source currently playing, else, returns false
 		bool isSoundPlaying(SoundID soundID);
+
+		// Returns the length of the sound with identifier soundID, in seconds
+		float getSoundLength(SoundID soundID);
+
+		// Sets the current time of a sound source, in seconds
+		void setSoundSourceTime(SoundSourceID soundSourceID, float time);
+		// Returns the current time of a sound source, in seconds
+		float getSoundSourceTime(SoundSourceID soundSourceID);
 
 		// Sets the position of the sound source with identifieer soundSourceID
 		void setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& newPosition);
