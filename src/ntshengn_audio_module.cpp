@@ -104,7 +104,7 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 
 	OpenALSound newSound;
 
-	newSound.length = static_cast<float>(sound.data.size()) / static_cast<float>(sound.sampleRate * sound.channels * (sound.bitsPerSample / 8));
+	newSound.length = sound.length;
 	
 	// Generate buffer
 	alCall(alGenBuffers, 1, &newSound.buffer);
@@ -142,10 +142,10 @@ NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
 NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float gain, float pitch, bool looping, float startTime) {
 	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
 
-	const float length = getSoundLength(soundID);
+	const float length = m_soundIDToSound[soundID].length;
 	if (startTime > length) {
 		if (looping) {
-			startTime = std::fmod(startTime, getSoundLength(soundID));
+			startTime = std::fmod(startTime, length);
 		}
 		else {
 			startTime = length;
@@ -181,10 +181,10 @@ NtshEngn::SoundSourceID NtshEngn::AudioModule::playSound(SoundID soundID, float 
 NtshEngn::SoundSourceID NtshEngn::AudioModule::playSoundAtPosition(SoundID soundID, const Math::vec3& position, float gain, float pitch, bool looping, float startTime) {
 	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
 
-	const float length = getSoundLength(soundID);
+	const float length = m_soundIDToSound[soundID].length;
 	if (startTime > length) {
 		if (looping) {
-			startTime = std::fmod(startTime, getSoundLength(soundID));
+			startTime = std::fmod(startTime, length);
 		}
 		else {
 			startTime = length;
@@ -270,12 +270,6 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	}
 
 	return false;
-}
-
-float NtshEngn::AudioModule::getSoundLength(SoundID soundID) {
-	NTSHENGN_ASSERT(m_soundIDToSound.find(soundID) != m_soundIDToSound.end(), "SoundID " + std::to_string(soundID) + " does not exist.");
-
-	return m_soundIDToSound[soundID].length;
 }
 
 void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float newTime) {
