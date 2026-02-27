@@ -77,13 +77,6 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	return false;
 }
 
-float NtshEngn::AudioModule::getSoundLength(SoundID soundID) {
-	NTSHENGN_UNUSED(soundID);
-	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
-
-	return 0.0f;
-}
-
 void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float newTime) {
 	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_UNUSED(newTime);
