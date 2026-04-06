@@ -31,9 +31,9 @@ namespace NtshEngn {
 		bool isSoundPlaying(SoundID soundID);
 
 		// Sets the current time of a sound source, in seconds
-		void setSoundSourceTime(SoundSourceID soundSourceID, float newTime);
+		void setSoundSourceCurrentTime(SoundSourceID soundSourceID, float newTime);
 		// Returns the current time of a sound source, in seconds
-		float getSoundSourceTime(SoundSourceID soundSourceID);
+		float getSoundSourceCurrentTime(SoundSourceID soundSourceID);
 
 		// Sets the position of the sound source with identifieer soundSourceID
 		void setSoundSourcePosition(SoundSourceID soundSourceID, const Math::vec3& newPosition);

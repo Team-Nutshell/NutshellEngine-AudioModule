@@ -77,13 +77,13 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	return false;
 }
 
-void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float newTime) {
+void NtshEngn::AudioModule::setSoundSourceCurrentTime(SoundSourceID soundSourceID, float newTime) {
 	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_UNUSED(newTime);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 }
 
-float NtshEngn::AudioModule::getSoundSourceTime(SoundSourceID soundSourceID) {
+float NtshEngn::AudioModule::getSoundSourceCurrentTime(SoundSourceID soundSourceID) {
 	NTSHENGN_UNUSED(soundSourceID);
 	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
 
