@@ -272,7 +272,7 @@ bool NtshEngn::AudioModule::isSoundPlaying(SoundID soundID) {
 	return false;
 }
 
-void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, float newTime) {
+void NtshEngn::AudioModule::setSoundSourceCurrentTime(SoundSourceID soundSourceID, float newTime) {
 	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	const OpenALSound& sound = m_soundIDToSound[m_soundSourceIDToSoundSource[soundSourceID].soundID];
@@ -286,7 +286,7 @@ void NtshEngn::AudioModule::setSoundSourceTime(SoundSourceID soundSourceID, floa
 	alCall(alSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_SEC_OFFSET, newTime);
 }
 
-float NtshEngn::AudioModule::getSoundSourceTime(SoundSourceID soundSourceID) {
+float NtshEngn::AudioModule::getSoundSourceCurrentTime(SoundSourceID soundSourceID) {
 	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
 	float time;
