@@ -328,6 +328,10 @@ float NtshEngn::AudioModule::getSoundSourceGain(SoundSourceID soundSourceID) {
 void NtshEngn::AudioModule::setSoundSourcePitch(SoundSourceID soundSourceID, float newPitch) {
 	NTSHENGN_ASSERT(m_soundSourceIDToSoundSource.find(soundSourceID) != m_soundSourceIDToSoundSource.end(), "SoundSourceID " + std::to_string(soundSourceID) + " does not exist.");
 
+	if (newPitch < 0.0f) {
+		newPitch = 0.0f;
+	}
+
 	alCall(alSourcef, m_soundSourceIDToSoundSource[soundSourceID].source, AL_PITCH, newPitch);
 	m_soundSourceIDToSoundSource[soundSourceID].pitch = newPitch;
 }
