@@ -179,6 +179,11 @@ namespace NtshEngn {
 		// Returns the master gain
 		float getMasterGain();
 
+		// Starts the audio input capture
+		void startAudioInputCapture();
+		// Stops the audio input capture
+		SoundID stopAudioInputCapture();
+
 	public:
 		const ComponentMask getComponentMask() const;
 
@@ -186,10 +191,12 @@ namespace NtshEngn {
 		void onEntityComponentRemoved(Entity entity, Component componentID);
 		
 	public:
-		bool reopenDevice = false;
+		bool reopenOutputDevice = false;
+		bool reopenInputDevice = false;
 
 	private:
-		ALCdevice* m_device = nullptr;
+		ALCdevice* m_outputDevice = nullptr;
+		ALCdevice* m_inputDevice = nullptr;
 		ALCcontext* m_context = nullptr;
 
 		std::unordered_map<SoundID, OpenALSound> m_soundIDToSound;
@@ -199,6 +206,12 @@ namespace NtshEngn {
 		SoundID m_soundSourceID = 0;
 
 		std::unordered_map<const Sound*, SoundID> m_soundAddresses;
+
+		bool m_isCapturing = false;
+		ALCuint m_captureFrequency = 44100;
+		ALCuint m_captureChannels = 1;
+		ALCuint m_captureBytesPerChannel = 2;
+		std::vector<ALubyte> m_captureBuffer;
 
 		LPALCEVENTCONTROLSOFT m_alcEventControlSOFT;
 		LPALCEVENTCALLBACKSOFT m_alcEventCallbackSOFT;
@@ -214,7 +227,12 @@ void ALC_APIENTRY systemEventCallback(ALCenum eventType, ALCenum deviceType, ALC
 	NTSHENGN_UNUSED(length);
 	NTSHENGN_UNUSED(message);
 
-	if ((eventType == ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT) && (deviceType == ALC_PLAYBACK_DEVICE_SOFT)) {
-		static_cast<NtshEngn::AudioModule*>(userParam)->reopenDevice = true;
+	if (eventType == ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT) {
+		if (deviceType == ALC_PLAYBACK_DEVICE_SOFT) {
+			static_cast<NtshEngn::AudioModule*>(userParam)->reopenOutputDevice = true;
+		}
+		else if (deviceType == ALC_CAPTURE_DEVICE_SOFT) {
+			static_cast<NtshEngn::AudioModule*>(userParam)->reopenInputDevice = true;
+		}
 	}
 }

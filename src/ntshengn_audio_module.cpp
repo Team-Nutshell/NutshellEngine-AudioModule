@@ -4,15 +4,15 @@
 #include "../Common/utils/ntshengn_enums.h"
 
 void NtshEngn::AudioModule::init() {
-	// Open audio device
-	m_device = alcOpenDevice(nullptr);
-	if (!m_device) {
-		NTSHENGN_MODULE_ERROR("Unable to open audio device.");
+	// Open audio output device
+	m_outputDevice = alcOpenDevice(nullptr);
+	if (!m_outputDevice) {
+		NTSHENGN_MODULE_ERROR("Unable to open audio output device.");
 	}
 
 	// Create context
 	std::array<ALCint, 3> createContextAttribs = { ALC_HRTF_SOFT, ALC_FALSE, 0 };
-	if (alcCall(alcCreateContext, m_context, m_device, m_device, createContextAttribs.data())) {
+	if (alcCall(alcCreateContext, m_context, m_outputDevice, m_outputDevice, createContextAttribs.data())) {
 		if (!m_context) {
 			NTSHENGN_MODULE_ERROR("Unable to create audio context.");
 		}
@@ -20,17 +20,23 @@ void NtshEngn::AudioModule::init() {
 
 	// Make context current
 	ALCboolean makeContextCurrent = ALC_FALSE;
-	if (!alcCall(alcMakeContextCurrent, makeContextCurrent, m_device, m_context)) {
+	if (!alcCall(alcMakeContextCurrent, makeContextCurrent, m_outputDevice, m_context)) {
 		if (makeContextCurrent != ALC_TRUE) {
 			NTSHENGN_MODULE_ERROR("Unable to make audio context current.");
 		}
 	}
 
+	// Open audio input device
+	m_inputDevice = alcCaptureOpenDevice(nullptr, m_captureFrequency, AL_FORMAT_MONO16, 1024);
+	if (!m_inputDevice) {
+		NTSHENGN_MODULE_WARNING("Unable to open audio input device.");
+	}
+
 	// Get extensions
-	if (alcIsExtensionPresent(m_device, "ALC_SOFT_system_events") && alcIsExtensionPresent(m_device, "ALC_SOFT_reopen_device")) {
-		m_alcEventControlSOFT = reinterpret_cast<LPALCEVENTCONTROLSOFT>(alcGetProcAddress(m_device, "alcEventControlSOFT"));
-		m_alcEventCallbackSOFT = reinterpret_cast<LPALCEVENTCALLBACKSOFT>(alcGetProcAddress(m_device, "alcEventCallbackSOFT"));
-		m_alcReopenDeviceSOFT = reinterpret_cast<LPALCREOPENDEVICESOFT>(alcGetProcAddress(m_device, "alcReopenDeviceSOFT"));
+	if (alcIsExtensionPresent(m_outputDevice, "ALC_SOFT_system_events") && alcIsExtensionPresent(m_outputDevice, "ALC_SOFT_reopen_device")) {
+		m_alcEventControlSOFT = reinterpret_cast<LPALCEVENTCONTROLSOFT>(alcGetProcAddress(m_outputDevice, "alcEventControlSOFT"));
+		m_alcEventCallbackSOFT = reinterpret_cast<LPALCEVENTCALLBACKSOFT>(alcGetProcAddress(m_outputDevice, "alcEventCallbackSOFT"));
+		m_alcReopenDeviceSOFT = reinterpret_cast<LPALCREOPENDEVICESOFT>(alcGetProcAddress(m_outputDevice, "alcReopenDeviceSOFT"));
 
 		ALenum eventType = ALC_EVENT_TYPE_DEFAULT_DEVICE_CHANGED_SOFT;
 		m_alcEventControlSOFT(1, &eventType, ALC_TRUE);
@@ -42,11 +48,23 @@ void NtshEngn::AudioModule::init() {
 void NtshEngn::AudioModule::update(float dt) {
 	NTSHENGN_UNUSED(dt);
 
-	if (reopenDevice) {
-		std::array<ALCint, 3> reopenDeviceAttribs = { ALC_HRTF_SOFT, ALC_FALSE, 0 };
-		m_alcReopenDeviceSOFT(m_device, nullptr, reopenDeviceAttribs.data());
+	if (reopenOutputDevice) {
+		std::array<ALCint, 3> reopenOutputDeviceAttribs = { ALC_HRTF_SOFT, ALC_FALSE, 0 };
+		m_alcReopenDeviceSOFT(m_outputDevice, nullptr, reopenOutputDeviceAttribs.data());
 
-		reopenDevice = false;
+		reopenOutputDevice = false;
+	}
+	if (reopenInputDevice) {
+		if (m_inputDevice) {
+			alcCaptureCloseDevice(m_inputDevice);
+		}
+
+		m_inputDevice = alcCaptureOpenDevice(nullptr, m_captureFrequency, AL_FORMAT_MONO16, 1024);
+		if (!m_inputDevice) {
+			NTSHENGN_MODULE_WARNING("Unable to open audio input device.");
+		}
+
+		reopenInputDevice = false;
 	}
 
 	if (m_listenerEntity != NTSHENGN_ENTITY_UNKNOWN) {
@@ -78,6 +96,17 @@ void NtshEngn::AudioModule::update(float dt) {
 			it++;
 		}
 	}
+
+	if (m_isCapturing) {
+		ALint currentCaptureSamples;
+		alcGetIntegerv(m_inputDevice, ALC_CAPTURE_SAMPLES, 1, &currentCaptureSamples);
+		if (currentCaptureSamples > 0) {
+			size_t previousCaptureBufferSize = m_captureBuffer.size();
+			m_captureBuffer.resize(previousCaptureBufferSize + (currentCaptureSamples * m_captureChannels * m_captureBytesPerChannel));
+			ALubyte* captureBufferPtr = m_captureBuffer.data() + (sizeof(ALubyte) * previousCaptureBufferSize);
+			alcCaptureSamples(m_inputDevice, captureBufferPtr, currentCaptureSamples);
+		}
+	}
 }
 
 void NtshEngn::AudioModule::destroy() {
@@ -90,9 +119,13 @@ void NtshEngn::AudioModule::destroy() {
 		alCall(alDeleteBuffers, 1, &sound.second.buffer);
 	}
 
+	if (m_inputDevice) {
+		alcCaptureCloseDevice(m_inputDevice);
+	}
+
 	alcMakeContextCurrent(m_context);
 	alcDestroyContext(m_context);
-	alcCloseDevice(m_device);
+	alcCloseDevice(m_outputDevice);
 }
 
 NtshEngn::SoundID NtshEngn::AudioModule::load(const Sound& sound) {
@@ -364,6 +397,36 @@ float NtshEngn::AudioModule::getMasterGain() {
 	alCall(alGetListenerf, AL_GAIN, &gain);
 
 	return gain;
+}
+
+void NtshEngn::AudioModule::startAudioInputCapture() {
+	if (m_inputDevice) {
+		m_captureBuffer.clear();
+
+		alcCaptureStart(m_inputDevice);
+
+		m_isCapturing = true;
+	}
+}
+
+NtshEngn::SoundID NtshEngn::AudioModule::stopAudioInputCapture() {
+	if (m_isCapturing) {
+		alcCaptureStop(m_inputDevice);
+
+		OpenALSound capturedSound;
+		alCall(alGenBuffers, 1, &capturedSound.buffer);
+		capturedSound.length = static_cast<float>(m_captureBuffer.size()) / static_cast<float>(m_captureFrequency * m_captureChannels * m_captureBytesPerChannel);
+
+		alCall(alBufferData, capturedSound.buffer, AL_FORMAT_MONO16, m_captureBuffer.data(), static_cast<ALsizei>(m_captureBuffer.size()), m_captureFrequency);
+
+		m_soundIDToSound[m_soundID] = capturedSound;
+
+		m_isCapturing = false;
+
+		return m_soundID++;
+	}
+
+	return NTSHENGN_SOUND_UNKNOWN;
 }
 
 const NtshEngn::ComponentMask NtshEngn::AudioModule::getComponentMask() const {
