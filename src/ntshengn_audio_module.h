@@ -59,6 +59,11 @@ namespace NtshEngn {
 		void setMasterGain(float newGain);
 		// Returns the master gain
 		float getMasterGain();
+
+		// Starts the audio input capture
+		void startAudioInputCapture();
+		// Stops the audio input capture
+		SoundID stopAudioInputCapture();
 	};
 
 }

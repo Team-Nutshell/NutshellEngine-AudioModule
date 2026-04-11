@@ -153,6 +153,16 @@ float NtshEngn::AudioModule::getMasterGain() {
 	return 0.0f;
 }
 
+void NtshEngn::AudioModule::startAudioInputCapture() {
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+}
+
+NtshEngn::SoundID NtshEngn::AudioModule::stopAudioInputCapture() {
+	NTSHENGN_MODULE_FUNCTION_NOT_IMPLEMENTED();
+
+	return NTSHENGN_SOUND_UNKNOWN;
+}
+
 extern "C" NTSHENGN_MODULE_API NtshEngn::AudioModuleInterface* createModule() {
 	return new NtshEngn::AudioModule;
 }
