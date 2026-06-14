@@ -73,15 +73,7 @@ void NtshEngn::AudioModule::update(float dt) {
 
 		alListener3f(AL_POSITION, listenerTransform.position.x, listenerTransform.position.y, listenerTransform.position.z);
 
-		const Math::vec3 baseSoundListenerDirection = Math::normalize(listenerSoundListener.forward);
-		const float baseDirectionYaw = std::atan2(baseSoundListenerDirection.z, baseSoundListenerDirection.x);
-		const float baseDirectionPitch = -std::asin(baseSoundListenerDirection.y);
-		const Math::vec3 eulerAnglesRotation = Math::quatToEulerAngles(listenerTransform.rotation);
-		const Math::vec3 soundListenerDirection = Math::normalize(Math::vec3(
-			std::cos(baseDirectionPitch + eulerAnglesRotation.x) * std::cos(baseDirectionYaw + eulerAnglesRotation.y),
-			-std::sin(baseDirectionPitch + eulerAnglesRotation.x),
-			std::cos(baseDirectionPitch + eulerAnglesRotation.x) * std::sin(baseDirectionYaw + eulerAnglesRotation.y)
-		));
+		const Math::vec3 soundListenerDirection = Math::normalize(Math::rotateVectorByQuat(listenerSoundListener.forward, listenerTransform.rotation));
 		std::array<float, 6> listenerOrientation = { soundListenerDirection.x, soundListenerDirection.y, soundListenerDirection.z, listenerSoundListener.up.x, listenerSoundListener.up.y, listenerSoundListener.up.z };
 		alListenerfv(AL_ORIENTATION, listenerOrientation.data());
 	}
