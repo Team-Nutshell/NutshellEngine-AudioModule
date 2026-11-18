@@ -1,7 +1,6 @@
 #include "ntshengn_audio_module.h"
 #include "../Module/utils/ntshengn_dynamic_library.h"
 #include "../Common/utils/ntshengn_defines.h"
-#include "../Common/utils/ntshengn_enums.h"
 
 void NtshEngn::AudioModule::init() {
 	// Open audio output device
